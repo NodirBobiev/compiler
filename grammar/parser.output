@@ -101,8 +101,8 @@ Grammar
    58                | OR
    59                | XOR
 
-   60 relation: simple
-   61         | simple compare_sign simple
+   60 relation: relation compare_sign simple
+   61         | simple
 
    62 compare_sign: LT_SIGN
    63             | LET_SIGN
@@ -118,13 +118,13 @@ Grammar
    71            | DIV_SIGN
    72            | MOD_SIGN
 
-   73 factor: factor mult_sign_s summand
+   73 factor: factor sum_sign summand
    74       | summand
-   75       | mult_sign_s summand
+   75       | sum_sign summand
    76       | NOT summand
 
-   77 mult_sign_s: PLUS_SIGN
-   78            | MINUS_SIGN
+   77 sum_sign: PLUS_SIGN
+   78         | MINUS_SIGN
 
    79 summand: primary
    80        | L_BR expression R_BR
@@ -295,10 +295,10 @@ Nonterminals, with rules where they appear
         on right: 55
     relation <node> (84)
         on left: 60 61
-        on right: 55 56
+        on right: 55 56 60
     compare_sign <node> (85)
         on left: 62 63 64 65 66 67
-        on right: 61
+        on right: 60
     simple <node> (86)
         on left: 68 69
         on right: 60 61 68
@@ -308,7 +308,7 @@ Nonterminals, with rules where they appear
     factor <node> (88)
         on left: 73 74 75 76
         on right: 68 69 73
-    mult_sign_s <node> (89)
+    sum_sign <node> (89)
         on left: 77 78
         on right: 73 75
     summand <node> (90)
@@ -463,7 +463,7 @@ State 14
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -540,16 +540,16 @@ State 18
 
 State 19
 
-   77 mult_sign_s: PLUS_SIGN •
+   77 sum_sign: PLUS_SIGN •
 
-    $default  reduce using rule 77 (mult_sign_s)
+    $default  reduce using rule 77 (sum_sign)
 
 
 State 20
 
-   78 mult_sign_s: MINUS_SIGN •
+   78 sum_sign: MINUS_SIGN •
 
-    $default  reduce using rule 78 (mult_sign_s)
+    $default  reduce using rule 78 (sum_sign)
 
 
 State 21
@@ -599,7 +599,7 @@ State 25
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -630,48 +630,50 @@ State 27
 State 28
 
    56 expression: relation •
+   60 relation: relation • compare_sign simple
+
+    LT_SIGN   shift, and go to state 57
+    LET_SIGN  shift, and go to state 58
+    GT_SIGN   shift, and go to state 59
+    GET_SIGN  shift, and go to state 60
+    EQ_SIGN   shift, and go to state 61
+    NEQ_SIGN  shift, and go to state 62
 
     $default  reduce using rule 56 (expression)
+
+    compare_sign  go to state 63
 
 
 State 29
 
-   60 relation: simple •
-   61         | simple • compare_sign simple
+   61 relation: simple •
    68 simple: simple • mult_sign_f factor
 
-    LT_SIGN    shift, and go to state 57
-    LET_SIGN   shift, and go to state 58
-    GT_SIGN    shift, and go to state 59
-    GET_SIGN   shift, and go to state 60
-    EQ_SIGN    shift, and go to state 61
-    NEQ_SIGN   shift, and go to state 62
-    MULT_SIGN  shift, and go to state 63
-    DIV_SIGN   shift, and go to state 64
-    MOD_SIGN   shift, and go to state 65
+    MULT_SIGN  shift, and go to state 64
+    DIV_SIGN   shift, and go to state 65
+    MOD_SIGN   shift, and go to state 66
 
-    $default  reduce using rule 60 (relation)
+    $default  reduce using rule 61 (relation)
 
-    compare_sign  go to state 66
-    mult_sign_f   go to state 67
+    mult_sign_f  go to state 67
 
 
 State 30
 
    69 simple: factor •
-   73 factor: factor • mult_sign_s summand
+   73 factor: factor • sum_sign summand
 
     PLUS_SIGN   shift, and go to state 19
     MINUS_SIGN  shift, and go to state 20
 
     $default  reduce using rule 69 (simple)
 
-    mult_sign_s  go to state 68
+    sum_sign  go to state 68
 
 
 State 31
 
-   75 factor: mult_sign_s • summand
+   75 factor: sum_sign • summand
 
     IDENTIFIER       shift, and go to state 10
     TRUE             shift, and go to state 21
@@ -896,7 +898,7 @@ State 56
     relation            go to state 81
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -947,28 +949,7 @@ State 62
 
 State 63
 
-   70 mult_sign_f: MULT_SIGN •
-
-    $default  reduce using rule 70 (mult_sign_f)
-
-
-State 64
-
-   71 mult_sign_f: DIV_SIGN •
-
-    $default  reduce using rule 71 (mult_sign_f)
-
-
-State 65
-
-   72 mult_sign_f: MOD_SIGN •
-
-    $default  reduce using rule 72 (mult_sign_f)
-
-
-State 66
-
-   61 relation: simple compare_sign • simple
+   60 relation: relation compare_sign • simple
 
     IDENTIFIER       shift, and go to state 10
     NOT              shift, and go to state 18
@@ -983,11 +964,32 @@ State 66
     routine_call        go to state 26
     simple              go to state 82
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
     identifier          go to state 35
+
+
+State 64
+
+   70 mult_sign_f: MULT_SIGN •
+
+    $default  reduce using rule 70 (mult_sign_f)
+
+
+State 65
+
+   71 mult_sign_f: DIV_SIGN •
+
+    $default  reduce using rule 71 (mult_sign_f)
+
+
+State 66
+
+   72 mult_sign_f: MOD_SIGN •
+
+    $default  reduce using rule 72 (mult_sign_f)
 
 
 State 67
@@ -1006,7 +1008,7 @@ State 67
 
     routine_call        go to state 26
     factor              go to state 83
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1015,7 +1017,7 @@ State 67
 
 State 68
 
-   73 factor: factor mult_sign_s • summand
+   73 factor: factor sum_sign • summand
 
     IDENTIFIER       shift, and go to state 10
     TRUE             shift, and go to state 21
@@ -1033,7 +1035,7 @@ State 68
 
 State 69
 
-   75 factor: mult_sign_s summand •
+   75 factor: sum_sign summand •
 
     $default  reduce using rule 75 (factor)
 
@@ -1057,7 +1059,7 @@ State 70
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1097,7 +1099,7 @@ State 72
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1134,7 +1136,7 @@ State 74
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1160,7 +1162,7 @@ State 75
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1223,20 +1225,30 @@ State 80
 State 81
 
    55 expression: expression logic_operation relation •
+   60 relation: relation • compare_sign simple
+
+    LT_SIGN   shift, and go to state 57
+    LET_SIGN  shift, and go to state 58
+    GT_SIGN   shift, and go to state 59
+    GET_SIGN  shift, and go to state 60
+    EQ_SIGN   shift, and go to state 61
+    NEQ_SIGN  shift, and go to state 62
 
     $default  reduce using rule 55 (expression)
+
+    compare_sign  go to state 63
 
 
 State 82
 
-   61 relation: simple compare_sign simple •
+   60 relation: relation compare_sign simple •
    68 simple: simple • mult_sign_f factor
 
-    MULT_SIGN  shift, and go to state 63
-    DIV_SIGN   shift, and go to state 64
-    MOD_SIGN   shift, and go to state 65
+    MULT_SIGN  shift, and go to state 64
+    DIV_SIGN   shift, and go to state 65
+    MOD_SIGN   shift, and go to state 66
 
-    $default  reduce using rule 61 (relation)
+    $default  reduce using rule 60 (relation)
 
     mult_sign_f  go to state 67
 
@@ -1244,19 +1256,19 @@ State 82
 State 83
 
    68 simple: simple mult_sign_f factor •
-   73 factor: factor • mult_sign_s summand
+   73 factor: factor • sum_sign summand
 
     PLUS_SIGN   shift, and go to state 19
     MINUS_SIGN  shift, and go to state 20
 
     $default  reduce using rule 68 (simple)
 
-    mult_sign_s  go to state 68
+    sum_sign  go to state 68
 
 
 State 84
 
-   73 factor: factor mult_sign_s summand •
+   73 factor: factor sum_sign summand •
 
     $default  reduce using rule 73 (factor)
 
@@ -1439,7 +1451,7 @@ State 101
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1556,7 +1568,7 @@ State 109
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1591,7 +1603,7 @@ State 111
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1621,7 +1633,7 @@ State 112
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1763,7 +1775,7 @@ State 126
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -1875,7 +1887,7 @@ State 134
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34
@@ -2007,7 +2019,7 @@ State 142
     relation            go to state 28
     simple              go to state 29
     factor              go to state 30
-    mult_sign_s         go to state 31
+    sum_sign            go to state 31
     summand             go to state 32
     primary             go to state 33
     modifiable_primary  go to state 34

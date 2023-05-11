@@ -1,6 +1,7 @@
 #include "common/node.hpp"
 #include "grammar/parser.hpp"
 #include "grammar/lexer.hpp"
+#include "generator/generator.cpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -38,5 +39,18 @@ int main(int argc, char *argv[]) {
 
     std::cout << root->print();
 
-    return 0;
+    /*
+    
+    semantic place
+    
+    */
+
+
+    auto generator = new Generator();
+
+    auto generatedOutput = generator->generate(root);
+
+    std::cout << std::endl << generatedOutput;
+
+    return 0;   
 }
