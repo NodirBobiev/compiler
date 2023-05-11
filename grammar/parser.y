@@ -53,7 +53,7 @@ void yyerror(void ** root, const char* msg, ...) {
 %type<node> array_type body statement return assignment routine_call
 %type<node> arguments expressions while_loop for_loop range reverse if_statement
 %type<node> else_body expression logic_operation relation compare_sign simple
-%type<node> mult_sign_f factor mult_sign_s summand primary modifiable_primary
+%type<node> mult_sign_f factor sum_sign summand primary modifiable_primary
 %type<node> identifier
 
 %start program
@@ -211,8 +211,8 @@ logic_operation
     ;
 
 relation
-    : simple { $$ = mpNode("relation", 1, $1);}
-    | simple compare_sign simple { $$ = mpNode("relation", 3, $1, $2, $3);}
+    : relation compare_sign simple { $$ = mpNode("relation", 3, $1, $2, $3);}
+    | simple { $$ = mpNode("relation", 1, $1);}
     ;
 
 compare_sign
@@ -228,7 +228,7 @@ simple
     : simple mult_sign_f factor { $$ = mpNode("simple", 3, $1, $2, $3);}
     | factor { $$ = mpNode("simple", 1, $1);}
     ;
-// f mean first priority
+    
 mult_sign_f
     : MULT_SIGN { $$ = mNode("mult_sign", "*");}
     | DIV_SIGN { $$ = mNode("mult_sign", "/");}
@@ -236,13 +236,13 @@ mult_sign_f
     ;
 
 factor
-    : factor mult_sign_s summand { $$ = mpNode("factor", 3, $1, $2, $3);}
+    : factor sum_sign summand { $$ = mpNode("factor", 3, $1, $2, $3);}
     | summand { $$ = mpNode("factor", 1, $1);}
-    | mult_sign_s summand { $$ = mpNode("unary_factor", 2, $1, $2);}
+    | sum_sign summand { $$ = mpNode("unary_factor", 2, $1, $2);}
     | NOT summand { $$ = mpNode("not_factor", 2, $1, $2);}
     ;
-// s mean second priority
-mult_sign_s
+
+sum_sign
     : PLUS_SIGN { $$ = mNode("sum_sign", "+");}
     | MINUS_SIGN { $$ = mNode("sum_sign", "-");}
     ;
