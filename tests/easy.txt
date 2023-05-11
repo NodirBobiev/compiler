@@ -1,0 +1,6 @@
+routine main() is
+    var a is 2
+    var b: integer
+    b := 3
+    return a + b
+end

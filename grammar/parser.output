@@ -1,0 +1,2072 @@
+Terminals unused in grammar
+
+    SEMICOLON
+    INVALID_CHARACTER
+
+
+State 86 conflicts: 2 shift/reduce
+State 112 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ε
+    2        | program simple_declaration
+    3        | program routine_declaration
+
+    4 simple_declaration: variable_declaration
+    5                   | type_declaration
+
+    6 variable_declaration: VAR identifier COLON type variable_expression
+    7                     | VAR identifier IS expression
+
+    8 variable_expression: ε
+    9                    | IS expression
+
+   10 type_declaration: TYPE identifier IS type
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type IS body END
+
+   12 routine_return_type: ε
+   13                    | COLON type
+
+   14 routine_parameters: ε
+   15                   | parameters
+
+   16 parameters: parameters COMMA parameter_declaration
+   17           | parameter_declaration
+
+   18 parameter_declaration: identifier COLON type
+
+   19 type: primitive_type
+   20     | array_type
+   21     | record_type
+   22     | identifier
+
+   23 primitive_type: INTEGER
+   24               | REAL
+   25               | BOOLEAN
+
+   26 record_type: RECORD variables_declaration END
+
+   27 variables_declaration: ε
+   28                      | variables_declaration variable_declaration
+
+   29 array_type: ARRAY L_SQ_BR expression R_SQ_BR type
+
+   30 body: ε
+   31     | body simple_declaration
+   32     | body statement
+
+   33 statement: assignment
+   34          | routine_call
+   35          | while_loop
+   36          | for_loop
+   37          | if_statement
+   38          | return
+
+   39 return: RETURN expression
+   40       | RETURN
+
+   41 assignment: modifiable_primary ASSIGNMENT_SIGN expression
+
+   42 routine_call: identifier L_BR arguments R_BR
+
+   43 arguments: ε
+   44          | expressions
+
+   45 expressions: expressions COMMA expression
+   46            | expression
+
+   47 while_loop: WHILE expression LOOP body END
+
+   48 for_loop: FOR identifier range LOOP body END
+
+   49 range: IN reverse expression RANGE_SIGN expression
+
+   50 reverse: ε
+   51        | REVERSE
+
+   52 if_statement: IF expression THEN body else_body END
+
+   53 else_body: ε
+   54          | ELSE body
+
+   55 expression: expression logic_operation relation
+   56           | relation
+
+   57 logic_operation: AND
+   58                | OR
+   59                | XOR
+
+   60 relation: simple
+   61         | simple compare_sign simple
+
+   62 compare_sign: LT_SIGN
+   63             | LET_SIGN
+   64             | GT_SIGN
+   65             | GET_SIGN
+   66             | EQ_SIGN
+   67             | NEQ_SIGN
+
+   68 simple: simple mult_sign_f factor
+   69       | factor
+
+   70 mult_sign_f: MULT_SIGN
+   71            | DIV_SIGN
+   72            | MOD_SIGN
+
+   73 factor: factor mult_sign_s summand
+   74       | summand
+   75       | mult_sign_s summand
+   76       | NOT summand
+
+   77 mult_sign_s: PLUS_SIGN
+   78            | MINUS_SIGN
+
+   79 summand: primary
+   80        | L_BR expression R_BR
+
+   81 primary: TRUE
+   82        | FALSE
+   83        | REAL_LITERAL
+   84        | INTEGER_LITERAL
+   85        | modifiable_primary
+   86        | routine_call
+
+   87 modifiable_primary: identifier
+   88                   | modifiable_primary L_SQ_BR expression R_SQ_BR
+   89                   | modifiable_primary DOT modifiable_primary
+
+   90 identifier: IDENTIFIER
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    VAR <value> (258) 6 7
+    IS <value> (259) 7 9 10 11
+    ROUTINE <value> (260) 11
+    END <value> (261) 11 26 47 48 52
+    IDENTIFIER <value> (262) 90
+    TYPE <value> (263) 10
+    INTEGER <value> (264) 23
+    REAL <value> (265) 24
+    BOOLEAN <value> (266) 25
+    RECORD <value> (267) 26
+    ARRAY <value> (268) 29
+    ASSIGNMENT_SIGN <value> (269) 41
+    RANGE_SIGN <value> (270) 49
+    WHILE <value> (271) 47
+    LOOP <value> (272) 47 48
+    FOR <value> (273) 48
+    REVERSE <value> (274) 51
+    IN <value> (275) 49
+    IF <value> (276) 52
+    THEN <value> (277) 52
+    ELSE <value> (278) 54
+    AND <value> (279) 57
+    OR <value> (280) 58
+    XOR <value> (281) 59
+    NOT <value> (282) 76
+    LT_SIGN <value> (283) 62
+    LET_SIGN <value> (284) 63
+    GT_SIGN <value> (285) 64
+    GET_SIGN <value> (286) 65
+    EQ_SIGN <value> (287) 66
+    NEQ_SIGN <value> (288) 67
+    MULT_SIGN <value> (289) 70
+    DIV_SIGN <value> (290) 71
+    MOD_SIGN <value> (291) 72
+    PLUS_SIGN <value> (292) 77
+    MINUS_SIGN <value> (293) 78
+    TRUE <value> (294) 81
+    FALSE <value> (295) 82
+    REAL_LITERAL <value> (296) 83
+    INTEGER_LITERAL <value> (297) 84
+    RETURN <value> (298) 39 40
+    L_SQ_BR <value> (299) 29 88
+    R_SQ_BR <value> (300) 29 88
+    L_BR <value> (301) 11 42 80
+    R_BR <value> (302) 11 42 80
+    COLON <value> (303) 6 13 18
+    DOT <value> (304) 89
+    COMMA <value> (305) 16 45
+    SEMICOLON <value> (306)
+    INVALID_CHARACTER <value> (307)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (53)
+        on left: 0
+    program <node> (54)
+        on left: 1 2 3
+        on right: 0 2 3
+    simple_declaration <node> (55)
+        on left: 4 5
+        on right: 2 31
+    variable_declaration <node> (56)
+        on left: 6 7
+        on right: 4 28
+    variable_expression <node> (57)
+        on left: 8 9
+        on right: 6
+    type_declaration <node> (58)
+        on left: 10
+        on right: 5
+    routine_declaration <node> (59)
+        on left: 11
+        on right: 3
+    routine_return_type <node> (60)
+        on left: 12 13
+        on right: 11
+    routine_parameters <node> (61)
+        on left: 14 15
+        on right: 11
+    parameters <node> (62)
+        on left: 16 17
+        on right: 15 16
+    parameter_declaration <node> (63)
+        on left: 18
+        on right: 16 17
+    type <node> (64)
+        on left: 19 20 21 22
+        on right: 6 10 13 18 29
+    primitive_type <node> (65)
+        on left: 23 24 25
+        on right: 19
+    record_type <node> (66)
+        on left: 26
+        on right: 21
+    variables_declaration <node> (67)
+        on left: 27 28
+        on right: 26 28
+    array_type <node> (68)
+        on left: 29
+        on right: 20
+    body <node> (69)
+        on left: 30 31 32
+        on right: 11 31 32 47 48 52 54
+    statement <node> (70)
+        on left: 33 34 35 36 37 38
+        on right: 32
+    return <node> (71)
+        on left: 39 40
+        on right: 38
+    assignment <node> (72)
+        on left: 41
+        on right: 33
+    routine_call <node> (73)
+        on left: 42
+        on right: 34 86
+    arguments <node> (74)
+        on left: 43 44
+        on right: 42
+    expressions <node> (75)
+        on left: 45 46
+        on right: 44 45
+    while_loop <node> (76)
+        on left: 47
+        on right: 35
+    for_loop <node> (77)
+        on left: 48
+        on right: 36
+    range <node> (78)
+        on left: 49
+        on right: 48
+    reverse <node> (79)
+        on left: 50 51
+        on right: 49
+    if_statement <node> (80)
+        on left: 52
+        on right: 37
+    else_body <node> (81)
+        on left: 53 54
+        on right: 52
+    expression <node> (82)
+        on left: 55 56
+        on right: 7 9 29 39 41 45 46 47 49 52 55 80 88
+    logic_operation <node> (83)
+        on left: 57 58 59
+        on right: 55
+    relation <node> (84)
+        on left: 60 61
+        on right: 55 56
+    compare_sign <node> (85)
+        on left: 62 63 64 65 66 67
+        on right: 61
+    simple <node> (86)
+        on left: 68 69
+        on right: 60 61 68
+    mult_sign_f <node> (87)
+        on left: 70 71 72
+        on right: 68
+    factor <node> (88)
+        on left: 73 74 75 76
+        on right: 68 69 73
+    mult_sign_s <node> (89)
+        on left: 77 78
+        on right: 73 75
+    summand <node> (90)
+        on left: 79 80
+        on right: 73 74 75 76
+    primary <node> (91)
+        on left: 81 82 83 84 85 86
+        on right: 79
+    modifiable_primary <node> (92)
+        on left: 87 88 89
+        on right: 41 85 88 89
+    identifier <node> (93)
+        on left: 90
+        on right: 6 7 10 11 18 22 42 48 87
+
+
+State 0
+
+    0 $accept: • program $end
+
+    $default  reduce using rule 1 (program)
+
+    program  go to state 1
+
+
+State 1
+
+    0 $accept: program • $end
+    2 program: program • simple_declaration
+    3        | program • routine_declaration
+
+    $end     shift, and go to state 2
+    VAR      shift, and go to state 3
+    ROUTINE  shift, and go to state 4
+    TYPE     shift, and go to state 5
+
+    simple_declaration    go to state 6
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    routine_declaration   go to state 9
+
+
+State 2
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 3
+
+    6 variable_declaration: VAR • identifier COLON type variable_expression
+    7                     | VAR • identifier IS expression
+
+    IDENTIFIER  shift, and go to state 10
+
+    identifier  go to state 11
+
+
+State 4
+
+   11 routine_declaration: ROUTINE • identifier L_BR routine_parameters R_BR routine_return_type IS body END
+
+    IDENTIFIER  shift, and go to state 10
+
+    identifier  go to state 12
+
+
+State 5
+
+   10 type_declaration: TYPE • identifier IS type
+
+    IDENTIFIER  shift, and go to state 10
+
+    identifier  go to state 13
+
+
+State 6
+
+    2 program: program simple_declaration •
+
+    $default  reduce using rule 2 (program)
+
+
+State 7
+
+    4 simple_declaration: variable_declaration •
+
+    $default  reduce using rule 4 (simple_declaration)
+
+
+State 8
+
+    5 simple_declaration: type_declaration •
+
+    $default  reduce using rule 5 (simple_declaration)
+
+
+State 9
+
+    3 program: program routine_declaration •
+
+    $default  reduce using rule 3 (program)
+
+
+State 10
+
+   90 identifier: IDENTIFIER •
+
+    $default  reduce using rule 90 (identifier)
+
+
+State 11
+
+    6 variable_declaration: VAR identifier • COLON type variable_expression
+    7                     | VAR identifier • IS expression
+
+    IS     shift, and go to state 14
+    COLON  shift, and go to state 15
+
+
+State 12
+
+   11 routine_declaration: ROUTINE identifier • L_BR routine_parameters R_BR routine_return_type IS body END
+
+    L_BR  shift, and go to state 16
+
+
+State 13
+
+   10 type_declaration: TYPE identifier • IS type
+
+    IS  shift, and go to state 17
+
+
+State 14
+
+    7 variable_declaration: VAR identifier IS • expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 27
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 15
+
+    6 variable_declaration: VAR identifier COLON • type variable_expression
+
+    IDENTIFIER  shift, and go to state 10
+    INTEGER     shift, and go to state 36
+    REAL        shift, and go to state 37
+    BOOLEAN     shift, and go to state 38
+    RECORD      shift, and go to state 39
+    ARRAY       shift, and go to state 40
+
+    type            go to state 41
+    primitive_type  go to state 42
+    record_type     go to state 43
+    array_type      go to state 44
+    identifier      go to state 45
+
+
+State 16
+
+   11 routine_declaration: ROUTINE identifier L_BR • routine_parameters R_BR routine_return_type IS body END
+
+    IDENTIFIER  shift, and go to state 10
+
+    $default  reduce using rule 14 (routine_parameters)
+
+    routine_parameters     go to state 46
+    parameters             go to state 47
+    parameter_declaration  go to state 48
+    identifier             go to state 49
+
+
+State 17
+
+   10 type_declaration: TYPE identifier IS • type
+
+    IDENTIFIER  shift, and go to state 10
+    INTEGER     shift, and go to state 36
+    REAL        shift, and go to state 37
+    BOOLEAN     shift, and go to state 38
+    RECORD      shift, and go to state 39
+    ARRAY       shift, and go to state 40
+
+    type            go to state 50
+    primitive_type  go to state 42
+    record_type     go to state 43
+    array_type      go to state 44
+    identifier      go to state 45
+
+
+State 18
+
+   76 factor: NOT • summand
+
+    IDENTIFIER       shift, and go to state 10
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    summand             go to state 51
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 19
+
+   77 mult_sign_s: PLUS_SIGN •
+
+    $default  reduce using rule 77 (mult_sign_s)
+
+
+State 20
+
+   78 mult_sign_s: MINUS_SIGN •
+
+    $default  reduce using rule 78 (mult_sign_s)
+
+
+State 21
+
+   81 primary: TRUE •
+
+    $default  reduce using rule 81 (primary)
+
+
+State 22
+
+   82 primary: FALSE •
+
+    $default  reduce using rule 82 (primary)
+
+
+State 23
+
+   83 primary: REAL_LITERAL •
+
+    $default  reduce using rule 83 (primary)
+
+
+State 24
+
+   84 primary: INTEGER_LITERAL •
+
+    $default  reduce using rule 84 (primary)
+
+
+State 25
+
+   80 summand: L_BR • expression R_BR
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 52
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 26
+
+   86 primary: routine_call •
+
+    $default  reduce using rule 86 (primary)
+
+
+State 27
+
+    7 variable_declaration: VAR identifier IS expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 7 (variable_declaration)
+
+    logic_operation  go to state 56
+
+
+State 28
+
+   56 expression: relation •
+
+    $default  reduce using rule 56 (expression)
+
+
+State 29
+
+   60 relation: simple •
+   61         | simple • compare_sign simple
+   68 simple: simple • mult_sign_f factor
+
+    LT_SIGN    shift, and go to state 57
+    LET_SIGN   shift, and go to state 58
+    GT_SIGN    shift, and go to state 59
+    GET_SIGN   shift, and go to state 60
+    EQ_SIGN    shift, and go to state 61
+    NEQ_SIGN   shift, and go to state 62
+    MULT_SIGN  shift, and go to state 63
+    DIV_SIGN   shift, and go to state 64
+    MOD_SIGN   shift, and go to state 65
+
+    $default  reduce using rule 60 (relation)
+
+    compare_sign  go to state 66
+    mult_sign_f   go to state 67
+
+
+State 30
+
+   69 simple: factor •
+   73 factor: factor • mult_sign_s summand
+
+    PLUS_SIGN   shift, and go to state 19
+    MINUS_SIGN  shift, and go to state 20
+
+    $default  reduce using rule 69 (simple)
+
+    mult_sign_s  go to state 68
+
+
+State 31
+
+   75 factor: mult_sign_s • summand
+
+    IDENTIFIER       shift, and go to state 10
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    summand             go to state 69
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 32
+
+   74 factor: summand •
+
+    $default  reduce using rule 74 (factor)
+
+
+State 33
+
+   79 summand: primary •
+
+    $default  reduce using rule 79 (summand)
+
+
+State 34
+
+   85 primary: modifiable_primary •
+   88 modifiable_primary: modifiable_primary • L_SQ_BR expression R_SQ_BR
+   89                   | modifiable_primary • DOT modifiable_primary
+
+    L_SQ_BR  shift, and go to state 70
+    DOT      shift, and go to state 71
+
+    $default  reduce using rule 85 (primary)
+
+
+State 35
+
+   42 routine_call: identifier • L_BR arguments R_BR
+   87 modifiable_primary: identifier •
+
+    L_BR  shift, and go to state 72
+
+    $default  reduce using rule 87 (modifiable_primary)
+
+
+State 36
+
+   23 primitive_type: INTEGER •
+
+    $default  reduce using rule 23 (primitive_type)
+
+
+State 37
+
+   24 primitive_type: REAL •
+
+    $default  reduce using rule 24 (primitive_type)
+
+
+State 38
+
+   25 primitive_type: BOOLEAN •
+
+    $default  reduce using rule 25 (primitive_type)
+
+
+State 39
+
+   26 record_type: RECORD • variables_declaration END
+
+    $default  reduce using rule 27 (variables_declaration)
+
+    variables_declaration  go to state 73
+
+
+State 40
+
+   29 array_type: ARRAY • L_SQ_BR expression R_SQ_BR type
+
+    L_SQ_BR  shift, and go to state 74
+
+
+State 41
+
+    6 variable_declaration: VAR identifier COLON type • variable_expression
+
+    IS  shift, and go to state 75
+
+    $default  reduce using rule 8 (variable_expression)
+
+    variable_expression  go to state 76
+
+
+State 42
+
+   19 type: primitive_type •
+
+    $default  reduce using rule 19 (type)
+
+
+State 43
+
+   21 type: record_type •
+
+    $default  reduce using rule 21 (type)
+
+
+State 44
+
+   20 type: array_type •
+
+    $default  reduce using rule 20 (type)
+
+
+State 45
+
+   22 type: identifier •
+
+    $default  reduce using rule 22 (type)
+
+
+State 46
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters • R_BR routine_return_type IS body END
+
+    R_BR  shift, and go to state 77
+
+
+State 47
+
+   15 routine_parameters: parameters •
+   16 parameters: parameters • COMMA parameter_declaration
+
+    COMMA  shift, and go to state 78
+
+    $default  reduce using rule 15 (routine_parameters)
+
+
+State 48
+
+   17 parameters: parameter_declaration •
+
+    $default  reduce using rule 17 (parameters)
+
+
+State 49
+
+   18 parameter_declaration: identifier • COLON type
+
+    COLON  shift, and go to state 79
+
+
+State 50
+
+   10 type_declaration: TYPE identifier IS type •
+
+    $default  reduce using rule 10 (type_declaration)
+
+
+State 51
+
+   76 factor: NOT summand •
+
+    $default  reduce using rule 76 (factor)
+
+
+State 52
+
+   55 expression: expression • logic_operation relation
+   80 summand: L_BR expression • R_BR
+
+    AND   shift, and go to state 53
+    OR    shift, and go to state 54
+    XOR   shift, and go to state 55
+    R_BR  shift, and go to state 80
+
+    logic_operation  go to state 56
+
+
+State 53
+
+   57 logic_operation: AND •
+
+    $default  reduce using rule 57 (logic_operation)
+
+
+State 54
+
+   58 logic_operation: OR •
+
+    $default  reduce using rule 58 (logic_operation)
+
+
+State 55
+
+   59 logic_operation: XOR •
+
+    $default  reduce using rule 59 (logic_operation)
+
+
+State 56
+
+   55 expression: expression logic_operation • relation
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    relation            go to state 81
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 57
+
+   62 compare_sign: LT_SIGN •
+
+    $default  reduce using rule 62 (compare_sign)
+
+
+State 58
+
+   63 compare_sign: LET_SIGN •
+
+    $default  reduce using rule 63 (compare_sign)
+
+
+State 59
+
+   64 compare_sign: GT_SIGN •
+
+    $default  reduce using rule 64 (compare_sign)
+
+
+State 60
+
+   65 compare_sign: GET_SIGN •
+
+    $default  reduce using rule 65 (compare_sign)
+
+
+State 61
+
+   66 compare_sign: EQ_SIGN •
+
+    $default  reduce using rule 66 (compare_sign)
+
+
+State 62
+
+   67 compare_sign: NEQ_SIGN •
+
+    $default  reduce using rule 67 (compare_sign)
+
+
+State 63
+
+   70 mult_sign_f: MULT_SIGN •
+
+    $default  reduce using rule 70 (mult_sign_f)
+
+
+State 64
+
+   71 mult_sign_f: DIV_SIGN •
+
+    $default  reduce using rule 71 (mult_sign_f)
+
+
+State 65
+
+   72 mult_sign_f: MOD_SIGN •
+
+    $default  reduce using rule 72 (mult_sign_f)
+
+
+State 66
+
+   61 relation: simple compare_sign • simple
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    simple              go to state 82
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 67
+
+   68 simple: simple mult_sign_f • factor
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    factor              go to state 83
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 68
+
+   73 factor: factor mult_sign_s • summand
+
+    IDENTIFIER       shift, and go to state 10
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    summand             go to state 84
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 69
+
+   75 factor: mult_sign_s summand •
+
+    $default  reduce using rule 75 (factor)
+
+
+State 70
+
+   88 modifiable_primary: modifiable_primary L_SQ_BR • expression R_SQ_BR
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 85
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 71
+
+   89 modifiable_primary: modifiable_primary DOT • modifiable_primary
+
+    IDENTIFIER  shift, and go to state 10
+
+    modifiable_primary  go to state 86
+    identifier          go to state 87
+
+
+State 72
+
+   42 routine_call: identifier L_BR • arguments R_BR
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    $default  reduce using rule 43 (arguments)
+
+    routine_call        go to state 26
+    arguments           go to state 88
+    expressions         go to state 89
+    expression          go to state 90
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 73
+
+   26 record_type: RECORD variables_declaration • END
+   28 variables_declaration: variables_declaration • variable_declaration
+
+    VAR  shift, and go to state 3
+    END  shift, and go to state 91
+
+    variable_declaration  go to state 92
+
+
+State 74
+
+   29 array_type: ARRAY L_SQ_BR • expression R_SQ_BR type
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 93
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 75
+
+    9 variable_expression: IS • expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 94
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 76
+
+    6 variable_declaration: VAR identifier COLON type variable_expression •
+
+    $default  reduce using rule 6 (variable_declaration)
+
+
+State 77
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR • routine_return_type IS body END
+
+    COLON  shift, and go to state 95
+
+    $default  reduce using rule 12 (routine_return_type)
+
+    routine_return_type  go to state 96
+
+
+State 78
+
+   16 parameters: parameters COMMA • parameter_declaration
+
+    IDENTIFIER  shift, and go to state 10
+
+    parameter_declaration  go to state 97
+    identifier             go to state 49
+
+
+State 79
+
+   18 parameter_declaration: identifier COLON • type
+
+    IDENTIFIER  shift, and go to state 10
+    INTEGER     shift, and go to state 36
+    REAL        shift, and go to state 37
+    BOOLEAN     shift, and go to state 38
+    RECORD      shift, and go to state 39
+    ARRAY       shift, and go to state 40
+
+    type            go to state 98
+    primitive_type  go to state 42
+    record_type     go to state 43
+    array_type      go to state 44
+    identifier      go to state 45
+
+
+State 80
+
+   80 summand: L_BR expression R_BR •
+
+    $default  reduce using rule 80 (summand)
+
+
+State 81
+
+   55 expression: expression logic_operation relation •
+
+    $default  reduce using rule 55 (expression)
+
+
+State 82
+
+   61 relation: simple compare_sign simple •
+   68 simple: simple • mult_sign_f factor
+
+    MULT_SIGN  shift, and go to state 63
+    DIV_SIGN   shift, and go to state 64
+    MOD_SIGN   shift, and go to state 65
+
+    $default  reduce using rule 61 (relation)
+
+    mult_sign_f  go to state 67
+
+
+State 83
+
+   68 simple: simple mult_sign_f factor •
+   73 factor: factor • mult_sign_s summand
+
+    PLUS_SIGN   shift, and go to state 19
+    MINUS_SIGN  shift, and go to state 20
+
+    $default  reduce using rule 68 (simple)
+
+    mult_sign_s  go to state 68
+
+
+State 84
+
+   73 factor: factor mult_sign_s summand •
+
+    $default  reduce using rule 73 (factor)
+
+
+State 85
+
+   55 expression: expression • logic_operation relation
+   88 modifiable_primary: modifiable_primary L_SQ_BR expression • R_SQ_BR
+
+    AND      shift, and go to state 53
+    OR       shift, and go to state 54
+    XOR      shift, and go to state 55
+    R_SQ_BR  shift, and go to state 99
+
+    logic_operation  go to state 56
+
+
+State 86
+
+   88 modifiable_primary: modifiable_primary • L_SQ_BR expression R_SQ_BR
+   89                   | modifiable_primary • DOT modifiable_primary
+   89                   | modifiable_primary DOT modifiable_primary •
+
+    L_SQ_BR  shift, and go to state 70
+    DOT      shift, and go to state 71
+
+    L_SQ_BR   [reduce using rule 89 (modifiable_primary)]
+    DOT       [reduce using rule 89 (modifiable_primary)]
+    $default  reduce using rule 89 (modifiable_primary)
+
+
+State 87
+
+   87 modifiable_primary: identifier •
+
+    $default  reduce using rule 87 (modifiable_primary)
+
+
+State 88
+
+   42 routine_call: identifier L_BR arguments • R_BR
+
+    R_BR  shift, and go to state 100
+
+
+State 89
+
+   44 arguments: expressions •
+   45 expressions: expressions • COMMA expression
+
+    COMMA  shift, and go to state 101
+
+    $default  reduce using rule 44 (arguments)
+
+
+State 90
+
+   46 expressions: expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 46 (expressions)
+
+    logic_operation  go to state 56
+
+
+State 91
+
+   26 record_type: RECORD variables_declaration END •
+
+    $default  reduce using rule 26 (record_type)
+
+
+State 92
+
+   28 variables_declaration: variables_declaration variable_declaration •
+
+    $default  reduce using rule 28 (variables_declaration)
+
+
+State 93
+
+   29 array_type: ARRAY L_SQ_BR expression • R_SQ_BR type
+   55 expression: expression • logic_operation relation
+
+    AND      shift, and go to state 53
+    OR       shift, and go to state 54
+    XOR      shift, and go to state 55
+    R_SQ_BR  shift, and go to state 102
+
+    logic_operation  go to state 56
+
+
+State 94
+
+    9 variable_expression: IS expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 9 (variable_expression)
+
+    logic_operation  go to state 56
+
+
+State 95
+
+   13 routine_return_type: COLON • type
+
+    IDENTIFIER  shift, and go to state 10
+    INTEGER     shift, and go to state 36
+    REAL        shift, and go to state 37
+    BOOLEAN     shift, and go to state 38
+    RECORD      shift, and go to state 39
+    ARRAY       shift, and go to state 40
+
+    type            go to state 103
+    primitive_type  go to state 42
+    record_type     go to state 43
+    array_type      go to state 44
+    identifier      go to state 45
+
+
+State 96
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type • IS body END
+
+    IS  shift, and go to state 104
+
+
+State 97
+
+   16 parameters: parameters COMMA parameter_declaration •
+
+    $default  reduce using rule 16 (parameters)
+
+
+State 98
+
+   18 parameter_declaration: identifier COLON type •
+
+    $default  reduce using rule 18 (parameter_declaration)
+
+
+State 99
+
+   88 modifiable_primary: modifiable_primary L_SQ_BR expression R_SQ_BR •
+
+    $default  reduce using rule 88 (modifiable_primary)
+
+
+State 100
+
+   42 routine_call: identifier L_BR arguments R_BR •
+
+    $default  reduce using rule 42 (routine_call)
+
+
+State 101
+
+   45 expressions: expressions COMMA • expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 105
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 102
+
+   29 array_type: ARRAY L_SQ_BR expression R_SQ_BR • type
+
+    IDENTIFIER  shift, and go to state 10
+    INTEGER     shift, and go to state 36
+    REAL        shift, and go to state 37
+    BOOLEAN     shift, and go to state 38
+    RECORD      shift, and go to state 39
+    ARRAY       shift, and go to state 40
+
+    type            go to state 106
+    primitive_type  go to state 42
+    record_type     go to state 43
+    array_type      go to state 44
+    identifier      go to state 45
+
+
+State 103
+
+   13 routine_return_type: COLON type •
+
+    $default  reduce using rule 13 (routine_return_type)
+
+
+State 104
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type IS • body END
+
+    $default  reduce using rule 30 (body)
+
+    body  go to state 107
+
+
+State 105
+
+   45 expressions: expressions COMMA expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 45 (expressions)
+
+    logic_operation  go to state 56
+
+
+State 106
+
+   29 array_type: ARRAY L_SQ_BR expression R_SQ_BR type •
+
+    $default  reduce using rule 29 (array_type)
+
+
+State 107
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type IS body • END
+   31 body: body • simple_declaration
+   32     | body • statement
+
+    VAR         shift, and go to state 3
+    END         shift, and go to state 108
+    IDENTIFIER  shift, and go to state 10
+    TYPE        shift, and go to state 5
+    WHILE       shift, and go to state 109
+    FOR         shift, and go to state 110
+    IF          shift, and go to state 111
+    RETURN      shift, and go to state 112
+
+    simple_declaration    go to state 113
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    statement             go to state 114
+    return                go to state 115
+    assignment            go to state 116
+    routine_call          go to state 117
+    while_loop            go to state 118
+    for_loop              go to state 119
+    if_statement          go to state 120
+    modifiable_primary    go to state 121
+    identifier            go to state 35
+
+
+State 108
+
+   11 routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type IS body END •
+
+    $default  reduce using rule 11 (routine_declaration)
+
+
+State 109
+
+   47 while_loop: WHILE • expression LOOP body END
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 122
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 110
+
+   48 for_loop: FOR • identifier range LOOP body END
+
+    IDENTIFIER  shift, and go to state 10
+
+    identifier  go to state 123
+
+
+State 111
+
+   52 if_statement: IF • expression THEN body else_body END
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 124
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 112
+
+   39 return: RETURN • expression
+   40       | RETURN •
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    IDENTIFIER  [reduce using rule 40 (return)]
+    $default    reduce using rule 40 (return)
+
+    routine_call        go to state 26
+    expression          go to state 125
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 113
+
+   31 body: body simple_declaration •
+
+    $default  reduce using rule 31 (body)
+
+
+State 114
+
+   32 body: body statement •
+
+    $default  reduce using rule 32 (body)
+
+
+State 115
+
+   38 statement: return •
+
+    $default  reduce using rule 38 (statement)
+
+
+State 116
+
+   33 statement: assignment •
+
+    $default  reduce using rule 33 (statement)
+
+
+State 117
+
+   34 statement: routine_call •
+
+    $default  reduce using rule 34 (statement)
+
+
+State 118
+
+   35 statement: while_loop •
+
+    $default  reduce using rule 35 (statement)
+
+
+State 119
+
+   36 statement: for_loop •
+
+    $default  reduce using rule 36 (statement)
+
+
+State 120
+
+   37 statement: if_statement •
+
+    $default  reduce using rule 37 (statement)
+
+
+State 121
+
+   41 assignment: modifiable_primary • ASSIGNMENT_SIGN expression
+   88 modifiable_primary: modifiable_primary • L_SQ_BR expression R_SQ_BR
+   89                   | modifiable_primary • DOT modifiable_primary
+
+    ASSIGNMENT_SIGN  shift, and go to state 126
+    L_SQ_BR          shift, and go to state 70
+    DOT              shift, and go to state 71
+
+
+State 122
+
+   47 while_loop: WHILE expression • LOOP body END
+   55 expression: expression • logic_operation relation
+
+    LOOP  shift, and go to state 127
+    AND   shift, and go to state 53
+    OR    shift, and go to state 54
+    XOR   shift, and go to state 55
+
+    logic_operation  go to state 56
+
+
+State 123
+
+   48 for_loop: FOR identifier • range LOOP body END
+
+    IN  shift, and go to state 128
+
+    range  go to state 129
+
+
+State 124
+
+   52 if_statement: IF expression • THEN body else_body END
+   55 expression: expression • logic_operation relation
+
+    THEN  shift, and go to state 130
+    AND   shift, and go to state 53
+    OR    shift, and go to state 54
+    XOR   shift, and go to state 55
+
+    logic_operation  go to state 56
+
+
+State 125
+
+   39 return: RETURN expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 39 (return)
+
+    logic_operation  go to state 56
+
+
+State 126
+
+   41 assignment: modifiable_primary ASSIGNMENT_SIGN • expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 131
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 127
+
+   47 while_loop: WHILE expression LOOP • body END
+
+    $default  reduce using rule 30 (body)
+
+    body  go to state 132
+
+
+State 128
+
+   49 range: IN • reverse expression RANGE_SIGN expression
+
+    REVERSE  shift, and go to state 133
+
+    $default  reduce using rule 50 (reverse)
+
+    reverse  go to state 134
+
+
+State 129
+
+   48 for_loop: FOR identifier range • LOOP body END
+
+    LOOP  shift, and go to state 135
+
+
+State 130
+
+   52 if_statement: IF expression THEN • body else_body END
+
+    $default  reduce using rule 30 (body)
+
+    body  go to state 136
+
+
+State 131
+
+   41 assignment: modifiable_primary ASSIGNMENT_SIGN expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 41 (assignment)
+
+    logic_operation  go to state 56
+
+
+State 132
+
+   31 body: body • simple_declaration
+   32     | body • statement
+   47 while_loop: WHILE expression LOOP body • END
+
+    VAR         shift, and go to state 3
+    END         shift, and go to state 137
+    IDENTIFIER  shift, and go to state 10
+    TYPE        shift, and go to state 5
+    WHILE       shift, and go to state 109
+    FOR         shift, and go to state 110
+    IF          shift, and go to state 111
+    RETURN      shift, and go to state 112
+
+    simple_declaration    go to state 113
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    statement             go to state 114
+    return                go to state 115
+    assignment            go to state 116
+    routine_call          go to state 117
+    while_loop            go to state 118
+    for_loop              go to state 119
+    if_statement          go to state 120
+    modifiable_primary    go to state 121
+    identifier            go to state 35
+
+
+State 133
+
+   51 reverse: REVERSE •
+
+    $default  reduce using rule 51 (reverse)
+
+
+State 134
+
+   49 range: IN reverse • expression RANGE_SIGN expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 138
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 135
+
+   48 for_loop: FOR identifier range LOOP • body END
+
+    $default  reduce using rule 30 (body)
+
+    body  go to state 139
+
+
+State 136
+
+   31 body: body • simple_declaration
+   32     | body • statement
+   52 if_statement: IF expression THEN body • else_body END
+
+    VAR         shift, and go to state 3
+    IDENTIFIER  shift, and go to state 10
+    TYPE        shift, and go to state 5
+    WHILE       shift, and go to state 109
+    FOR         shift, and go to state 110
+    IF          shift, and go to state 111
+    ELSE        shift, and go to state 140
+    RETURN      shift, and go to state 112
+
+    $default  reduce using rule 53 (else_body)
+
+    simple_declaration    go to state 113
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    statement             go to state 114
+    return                go to state 115
+    assignment            go to state 116
+    routine_call          go to state 117
+    while_loop            go to state 118
+    for_loop              go to state 119
+    if_statement          go to state 120
+    else_body             go to state 141
+    modifiable_primary    go to state 121
+    identifier            go to state 35
+
+
+State 137
+
+   47 while_loop: WHILE expression LOOP body END •
+
+    $default  reduce using rule 47 (while_loop)
+
+
+State 138
+
+   49 range: IN reverse expression • RANGE_SIGN expression
+   55 expression: expression • logic_operation relation
+
+    RANGE_SIGN  shift, and go to state 142
+    AND         shift, and go to state 53
+    OR          shift, and go to state 54
+    XOR         shift, and go to state 55
+
+    logic_operation  go to state 56
+
+
+State 139
+
+   31 body: body • simple_declaration
+   32     | body • statement
+   48 for_loop: FOR identifier range LOOP body • END
+
+    VAR         shift, and go to state 3
+    END         shift, and go to state 143
+    IDENTIFIER  shift, and go to state 10
+    TYPE        shift, and go to state 5
+    WHILE       shift, and go to state 109
+    FOR         shift, and go to state 110
+    IF          shift, and go to state 111
+    RETURN      shift, and go to state 112
+
+    simple_declaration    go to state 113
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    statement             go to state 114
+    return                go to state 115
+    assignment            go to state 116
+    routine_call          go to state 117
+    while_loop            go to state 118
+    for_loop              go to state 119
+    if_statement          go to state 120
+    modifiable_primary    go to state 121
+    identifier            go to state 35
+
+
+State 140
+
+   54 else_body: ELSE • body
+
+    $default  reduce using rule 30 (body)
+
+    body  go to state 144
+
+
+State 141
+
+   52 if_statement: IF expression THEN body else_body • END
+
+    END  shift, and go to state 145
+
+
+State 142
+
+   49 range: IN reverse expression RANGE_SIGN • expression
+
+    IDENTIFIER       shift, and go to state 10
+    NOT              shift, and go to state 18
+    PLUS_SIGN        shift, and go to state 19
+    MINUS_SIGN       shift, and go to state 20
+    TRUE             shift, and go to state 21
+    FALSE            shift, and go to state 22
+    REAL_LITERAL     shift, and go to state 23
+    INTEGER_LITERAL  shift, and go to state 24
+    L_BR             shift, and go to state 25
+
+    routine_call        go to state 26
+    expression          go to state 146
+    relation            go to state 28
+    simple              go to state 29
+    factor              go to state 30
+    mult_sign_s         go to state 31
+    summand             go to state 32
+    primary             go to state 33
+    modifiable_primary  go to state 34
+    identifier          go to state 35
+
+
+State 143
+
+   48 for_loop: FOR identifier range LOOP body END •
+
+    $default  reduce using rule 48 (for_loop)
+
+
+State 144
+
+   31 body: body • simple_declaration
+   32     | body • statement
+   54 else_body: ELSE body •
+
+    VAR         shift, and go to state 3
+    IDENTIFIER  shift, and go to state 10
+    TYPE        shift, and go to state 5
+    WHILE       shift, and go to state 109
+    FOR         shift, and go to state 110
+    IF          shift, and go to state 111
+    RETURN      shift, and go to state 112
+
+    $default  reduce using rule 54 (else_body)
+
+    simple_declaration    go to state 113
+    variable_declaration  go to state 7
+    type_declaration      go to state 8
+    statement             go to state 114
+    return                go to state 115
+    assignment            go to state 116
+    routine_call          go to state 117
+    while_loop            go to state 118
+    for_loop              go to state 119
+    if_statement          go to state 120
+    modifiable_primary    go to state 121
+    identifier            go to state 35
+
+
+State 145
+
+   52 if_statement: IF expression THEN body else_body END •
+
+    $default  reduce using rule 52 (if_statement)
+
+
+State 146
+
+   49 range: IN reverse expression RANGE_SIGN expression •
+   55 expression: expression • logic_operation relation
+
+    AND  shift, and go to state 53
+    OR   shift, and go to state 54
+    XOR  shift, and go to state 55
+
+    $default  reduce using rule 49 (range)
+
+    logic_operation  go to state 56
