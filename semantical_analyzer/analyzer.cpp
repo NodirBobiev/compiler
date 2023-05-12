@@ -24,7 +24,7 @@ std::string Analyzer::typecheckNode(Node *node, std::string type)
 
 void Analyzer::setActualType(Node *node, std::string type)
 {
-    if(!expectedType.empty() && typecheck(expectedType, type)){
+    if(!expectedType.empty() && !typecheck(expectedType, type)){
         throw std::runtime_error("Expected " + expectedType + " type but got " + type + " type");
     }
     actualType = type;
@@ -99,6 +99,39 @@ void Analyzer::visitVariableDeclarationAuto(Node* node)
 
     setActualType(node, type);
     addVariable(ident, type);
+}
+
+void Analyzer::visitWhileLoop(Node* node)
+{
+    typecheckNode(node->children[1], "");
+    typecheckNode(node->children[0], "boolean");
+}
+
+void Analyzer::visitForLoop(Node* node)
+{
+    auto iNode = node->children[0];
+    auto iType = getVariableType(iNode->value);
+    if (iType != "integer") {
+        throw std::runtime_error("In for loop identifier " + iNode->value + " is " + iType + " insetead of integer");
+    }
+
+    typecheckNode(node->children[1], "");
+    typecheckNode(node->children[2], "");
+}
+
+void Analyzer::visitRange(Node* node)
+{
+    typecheckNode(node->children[0], "integer");
+    typecheckNode(node->children[1], "integer");
+}
+
+void Analyzer::visitIfStatement(Node* node)
+{
+    typecheckNode(node->children[0], "boolean");
+    typecheckNode(node->children[1], "");
+    if (node->size == 3) {
+        typecheckNode(node->children[2], "");
+    }
 }
 
 void Analyzer::visitExpression(Node* node) 

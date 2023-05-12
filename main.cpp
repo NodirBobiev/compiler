@@ -44,11 +44,11 @@ int main(int argc, char *argv[]) {
 
     semantic_analyzer->analyze(root);
 
-    auto generator = new Generator();
+    // auto generator = new Generator();
 
-    auto generatedOutput = generator->generate(root);
+    // auto generatedOutput = generator->generate(root);
 
-    std::cout << std::endl << generatedOutput;
+    // std::cout << std::endl << generatedOutput;
 
     return 0;   
 }

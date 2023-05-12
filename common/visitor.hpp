@@ -39,6 +39,7 @@ public:
     virtual void visitSimple(Node *p);
     virtual void visitMultSign(Node *p);
     virtual void visitFactor(Node *p);
+    virtual void visitNotFactor(Node *p);
     virtual void visitUnaryFactor(Node *p);
     virtual void visitSumSign(Node *p);
     virtual void visitSummand(Node *p);

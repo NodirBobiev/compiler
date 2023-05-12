@@ -1,0 +1,7 @@
+routine main() : boolean is
+    var a is 0
+    for a in 0 .. 4
+    loop
+        a := a + 1
+    end
+end
