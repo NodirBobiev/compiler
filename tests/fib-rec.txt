@@ -9,7 +9,11 @@ routine fibonacci(n : integer) : integer is
         return 1
     end
     
-    return fibonacci(n-2) + fibonacci(n-1)
+    var a is fibonacci(n -x 2)
+
+    var b is fibonacci(n - 1)
+
+    return a + b
 end
 
 routine main() is

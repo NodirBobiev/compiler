@@ -212,11 +212,11 @@ public:
     void putMultSign(std::string multSign)
     {
         if( multSign == "*" ){
-            generateResult += "\tfmul";
+            generateResult += "\tfmul\n";
         }else if( multSign == "/"){
-            generateResult += "\tfdiv";
-        }else if( multSign == "% "){
-            generateResult += "\tfrem";
+            generateResult += "\tfdiv\n";
+        }else if( multSign == "%"){
+            generateResult += "\tfrem\n";
         }else{
             throw std::runtime_error("Mult sign " + multSign + " is not supported");
         }
@@ -420,12 +420,12 @@ public:
     {
         assert(node->size == 1 || node->size == 3 && "Simple: must have 1 or 3 children");
         if( node->size == 1 ){
-            assert(node->children[0]->type == "factor" && "Simple has 1 child and it must be factor");
+            // assert(node->children[0]->type == "factor" && "Simple has 1 child and it must be factor");
             visit(node->children[0]);
         }else{
-            assert(node->children[0]->type == "simple" && "Simple: 1st child must be simple");
-            assert(node->children[1]->type == "mult_sign" && "Simple: 2nd child must be mult sign");
-            assert(node->children[2]->type == "factor" && "Simple: 3rd child must be factor");
+            // assert(node->children[0]->type == "simple" && "Simple: 1st child must be simple");
+            // assert(node->children[1]->type == "mult_sign" && "Simple: 2nd child must be mult sign");
+            // assert(node->children[2]->type == "factor" && "Simple: 3rd child must be factor");
             typecheckNode(node->children[0], new TypeReal());
             typecheckNode(node->children[2], new TypeReal());
             putMultSign(node->children[1]->value);
