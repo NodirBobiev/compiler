@@ -595,16 +595,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    62,    62,    63,    64,    68,    69,    73,    74,    78,
-      79,    83,    87,    91,    92,    96,    97,   101,   102,   107,
-     111,   112,   113,   114,   118,   119,   120,   124,   128,   129,
-     133,   137,   138,   139,   143,   144,   145,   146,   147,   148,
-     152,   153,   158,   162,   166,   167,   171,   172,   176,   180,
-     184,   189,   190,   194,   198,   199,   203,   204,   208,   209,
-     210,   214,   215,   219,   220,   221,   222,   223,   224,   228,
-     229,   233,   234,   235,   239,   240,   241,   242,   246,   247,
-     251,   252,   257,   258,   259,   260,   261,   262,   266,   267,
-     268,   273
+       0,    70,    70,    71,    72,    76,    77,    81,    82,    86,
+      87,    91,    95,    99,   100,   104,   105,   109,   110,   115,
+     119,   120,   121,   122,   126,   127,   128,   132,   136,   137,
+     141,   145,   146,   147,   151,   152,   153,   154,   155,   156,
+     160,   161,   166,   170,   174,   175,   179,   180,   184,   188,
+     192,   197,   198,   202,   206,   207,   211,   212,   216,   217,
+     218,   222,   223,   227,   228,   229,   230,   231,   232,   236,
+     237,   241,   242,   243,   247,   248,   249,   250,   254,   255,
+     259,   260,   265,   266,   267,   268,   269,   270,   274,   275,
+     276,   281
 };
 #endif
 
@@ -1555,541 +1555,541 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: %empty  */
-#line 62 "grammar/parser.y"
+#line 70 "grammar/parser.y"
       {(yyval.node) = mNode("program");}
 #line 1561 "grammar/parser.cpp"
     break;
 
   case 3: /* program: program simple_declaration  */
-#line 63 "grammar/parser.y"
+#line 71 "grammar/parser.y"
                                  { (yyval.node) = (yyvsp[-1].node)->add((yyvsp[0].node)); *root = (yyval.node);}
 #line 1567 "grammar/parser.cpp"
     break;
 
   case 4: /* program: program routine_declaration  */
-#line 64 "grammar/parser.y"
+#line 72 "grammar/parser.y"
                                   { (yyval.node) = (yyvsp[-1].node)->add((yyvsp[0].node)); *root = (yyval.node);}
 #line 1573 "grammar/parser.cpp"
     break;
 
   case 5: /* simple_declaration: variable_declaration  */
-#line 68 "grammar/parser.y"
+#line 76 "grammar/parser.y"
                            { (yyval.node) = mpNode("simple_declaration", 1, (yyvsp[0].node)); }
 #line 1579 "grammar/parser.cpp"
     break;
 
   case 6: /* simple_declaration: type_declaration  */
-#line 69 "grammar/parser.y"
+#line 77 "grammar/parser.y"
                        { (yyval.node) = mpNode("simple_declaration", 1, (yyvsp[0].node)); }
 #line 1585 "grammar/parser.cpp"
     break;
 
   case 7: /* variable_declaration: VAR identifier COLON type variable_expression  */
-#line 73 "grammar/parser.y"
+#line 81 "grammar/parser.y"
                                                     { (yyval.node) = mpNode("variable_declaration", 3, (yyvsp[-3].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1591 "grammar/parser.cpp"
     break;
 
   case 8: /* variable_declaration: VAR identifier IS expression  */
-#line 74 "grammar/parser.y"
+#line 82 "grammar/parser.y"
                                    { (yyval.node) = mpNode("variable_declaration_auto", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1597 "grammar/parser.cpp"
     break;
 
   case 9: /* variable_expression: %empty  */
-#line 78 "grammar/parser.y"
+#line 86 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1603 "grammar/parser.cpp"
     break;
 
   case 10: /* variable_expression: IS expression  */
-#line 79 "grammar/parser.y"
+#line 87 "grammar/parser.y"
                     { (yyval.node) = (yyvsp[0].node);}
 #line 1609 "grammar/parser.cpp"
     break;
 
   case 11: /* type_declaration: TYPE identifier IS type  */
-#line 83 "grammar/parser.y"
+#line 91 "grammar/parser.y"
                               { (yyval.node) = mpNode("type_declaration", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1615 "grammar/parser.cpp"
     break;
 
   case 12: /* routine_declaration: ROUTINE identifier L_BR routine_parameters R_BR routine_return_type IS body END  */
-#line 87 "grammar/parser.y"
+#line 95 "grammar/parser.y"
                                                                                       { (yyval.node) = mpNode("routine_declaration", 4, (yyvsp[-7].node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));}
 #line 1621 "grammar/parser.cpp"
     break;
 
   case 13: /* routine_return_type: %empty  */
-#line 91 "grammar/parser.y"
+#line 99 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1627 "grammar/parser.cpp"
     break;
 
   case 14: /* routine_return_type: COLON type  */
-#line 92 "grammar/parser.y"
+#line 100 "grammar/parser.y"
                  { (yyval.node) = (yyvsp[0].node);}
 #line 1633 "grammar/parser.cpp"
     break;
 
   case 15: /* routine_parameters: %empty  */
-#line 96 "grammar/parser.y"
+#line 104 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1639 "grammar/parser.cpp"
     break;
 
   case 16: /* routine_parameters: parameters  */
-#line 97 "grammar/parser.y"
+#line 105 "grammar/parser.y"
                  { (yyval.node) = (yyvsp[0].node);}
 #line 1645 "grammar/parser.cpp"
     break;
 
   case 17: /* parameters: parameters COMMA parameter_declaration  */
-#line 101 "grammar/parser.y"
+#line 109 "grammar/parser.y"
                                              { (yyval.node) = (yyvsp[-2].node)->add((yyvsp[0].node));}
 #line 1651 "grammar/parser.cpp"
     break;
 
   case 18: /* parameters: parameter_declaration  */
-#line 102 "grammar/parser.y"
+#line 110 "grammar/parser.y"
                             { (yyval.node) = mpNode("parameters", 1, (yyvsp[0].node));}
 #line 1657 "grammar/parser.cpp"
     break;
 
   case 19: /* parameter_declaration: identifier COLON type  */
-#line 107 "grammar/parser.y"
+#line 115 "grammar/parser.y"
                             { (yyval.node) = mpNode("parameter_declaration", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1663 "grammar/parser.cpp"
     break;
 
   case 20: /* type: primitive_type  */
-#line 111 "grammar/parser.y"
+#line 119 "grammar/parser.y"
                      { (yyval.node) = mpNode("type", 1, (yyvsp[0].node));}
 #line 1669 "grammar/parser.cpp"
     break;
 
   case 21: /* type: array_type  */
-#line 112 "grammar/parser.y"
+#line 120 "grammar/parser.y"
                  { (yyval.node) = mpNode("type", 1, (yyvsp[0].node));}
 #line 1675 "grammar/parser.cpp"
     break;
 
   case 22: /* type: record_type  */
-#line 113 "grammar/parser.y"
+#line 121 "grammar/parser.y"
                   { (yyval.node) = mpNode("type", 1, (yyvsp[0].node));}
 #line 1681 "grammar/parser.cpp"
     break;
 
   case 23: /* type: identifier  */
-#line 114 "grammar/parser.y"
+#line 122 "grammar/parser.y"
                  { (yyval.node) = mpNode("type", 1, (yyvsp[0].node));}
 #line 1687 "grammar/parser.cpp"
     break;
 
   case 24: /* primitive_type: INTEGER  */
-#line 118 "grammar/parser.y"
+#line 126 "grammar/parser.y"
               { (yyval.node) = mNode("primitive_type", "integer");}
 #line 1693 "grammar/parser.cpp"
     break;
 
   case 25: /* primitive_type: REAL  */
-#line 119 "grammar/parser.y"
+#line 127 "grammar/parser.y"
            { (yyval.node) = mNode("primitive_type", "real");}
 #line 1699 "grammar/parser.cpp"
     break;
 
   case 26: /* primitive_type: BOOLEAN  */
-#line 120 "grammar/parser.y"
+#line 128 "grammar/parser.y"
               { (yyval.node) = mNode("primitive_type", "boolean");}
 #line 1705 "grammar/parser.cpp"
     break;
 
   case 27: /* record_type: RECORD variables_declaration END  */
-#line 124 "grammar/parser.y"
+#line 132 "grammar/parser.y"
                                        { (yyval.node) = mpNode("record_type", 1, (yyvsp[-1].node));}
 #line 1711 "grammar/parser.cpp"
     break;
 
   case 28: /* variables_declaration: %empty  */
-#line 128 "grammar/parser.y"
+#line 136 "grammar/parser.y"
       {(yyval.node) = mNode("variables_declaration");}
 #line 1717 "grammar/parser.cpp"
     break;
 
   case 29: /* variables_declaration: variables_declaration variable_declaration  */
-#line 129 "grammar/parser.y"
+#line 137 "grammar/parser.y"
                                                  { (yyval.node) =  (yyvsp[-1].node)->add((yyvsp[0].node));}
 #line 1723 "grammar/parser.cpp"
     break;
 
   case 30: /* array_type: ARRAY L_SQ_BR expression R_SQ_BR type  */
-#line 133 "grammar/parser.y"
+#line 141 "grammar/parser.y"
                                             { (yyval.node) = mpNode("array_type", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1729 "grammar/parser.cpp"
     break;
 
   case 31: /* body: %empty  */
-#line 137 "grammar/parser.y"
+#line 145 "grammar/parser.y"
       {(yyval.node) = mNode("body");}
 #line 1735 "grammar/parser.cpp"
     break;
 
   case 32: /* body: body simple_declaration  */
-#line 138 "grammar/parser.y"
+#line 146 "grammar/parser.y"
                               { (yyval.node) = (yyvsp[-1].node)->add((yyvsp[0].node));}
 #line 1741 "grammar/parser.cpp"
     break;
 
   case 33: /* body: body statement  */
-#line 139 "grammar/parser.y"
+#line 147 "grammar/parser.y"
                      { (yyval.node) = (yyvsp[-1].node)->add((yyvsp[0].node));}
 #line 1747 "grammar/parser.cpp"
     break;
 
   case 34: /* statement: assignment  */
-#line 143 "grammar/parser.y"
+#line 151 "grammar/parser.y"
                   { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1753 "grammar/parser.cpp"
     break;
 
   case 35: /* statement: routine_call  */
-#line 144 "grammar/parser.y"
+#line 152 "grammar/parser.y"
                    { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1759 "grammar/parser.cpp"
     break;
 
   case 36: /* statement: while_loop  */
-#line 145 "grammar/parser.y"
+#line 153 "grammar/parser.y"
                  { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1765 "grammar/parser.cpp"
     break;
 
   case 37: /* statement: for_loop  */
-#line 146 "grammar/parser.y"
+#line 154 "grammar/parser.y"
                { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1771 "grammar/parser.cpp"
     break;
 
   case 38: /* statement: if_statement  */
-#line 147 "grammar/parser.y"
+#line 155 "grammar/parser.y"
                    { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1777 "grammar/parser.cpp"
     break;
 
   case 39: /* statement: return  */
-#line 148 "grammar/parser.y"
+#line 156 "grammar/parser.y"
              { (yyval.node) = mpNode("statement", 1, (yyvsp[0].node));}
 #line 1783 "grammar/parser.cpp"
     break;
 
   case 40: /* return: RETURN expression  */
-#line 152 "grammar/parser.y"
+#line 160 "grammar/parser.y"
                         { (yyval.node) = mpNode("return", 1, (yyvsp[0].node)); }
 #line 1789 "grammar/parser.cpp"
     break;
 
   case 41: /* return: RETURN  */
-#line 153 "grammar/parser.y"
+#line 161 "grammar/parser.y"
              { (yyval.node) = mNode("return"); }
 #line 1795 "grammar/parser.cpp"
     break;
 
   case 42: /* assignment: modifiable_primary ASSIGNMENT_SIGN expression  */
-#line 158 "grammar/parser.y"
+#line 166 "grammar/parser.y"
                                                     { (yyval.node) = mpNode("assignment", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1801 "grammar/parser.cpp"
     break;
 
   case 43: /* routine_call: identifier L_BR arguments R_BR  */
-#line 162 "grammar/parser.y"
+#line 170 "grammar/parser.y"
                                      { (yyval.node) = mpNode("routine_call", 2, (yyvsp[-3].node), (yyvsp[-1].node));}
 #line 1807 "grammar/parser.cpp"
     break;
 
   case 44: /* arguments: %empty  */
-#line 166 "grammar/parser.y"
+#line 174 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1813 "grammar/parser.cpp"
     break;
 
   case 45: /* arguments: expressions  */
-#line 167 "grammar/parser.y"
+#line 175 "grammar/parser.y"
                   { (yyval.node) = (yyvsp[0].node);}
 #line 1819 "grammar/parser.cpp"
     break;
 
   case 46: /* expressions: expressions COMMA expression  */
-#line 171 "grammar/parser.y"
+#line 179 "grammar/parser.y"
                                    { (yyval.node) = (yyvsp[-2].node)->add((yyvsp[0].node));}
 #line 1825 "grammar/parser.cpp"
     break;
 
   case 47: /* expressions: expression  */
-#line 172 "grammar/parser.y"
+#line 180 "grammar/parser.y"
                  { (yyval.node) = mpNode("arguments", 1, (yyvsp[0].node));}
 #line 1831 "grammar/parser.cpp"
     break;
 
   case 48: /* while_loop: WHILE expression LOOP body END  */
-#line 176 "grammar/parser.y"
+#line 184 "grammar/parser.y"
                                      { (yyval.node) = mpNode("while_loop", 2, (yyvsp[-3].node), (yyvsp[-1].node));}
 #line 1837 "grammar/parser.cpp"
     break;
 
   case 49: /* for_loop: FOR identifier range LOOP body END  */
-#line 180 "grammar/parser.y"
+#line 188 "grammar/parser.y"
                                          { (yyval.node) = mpNode("for_loop", 3, (yyvsp[-4].node), (yyvsp[-3].node), (yyvsp[-1].node));}
 #line 1843 "grammar/parser.cpp"
     break;
 
   case 50: /* range: IN reverse expression RANGE_SIGN expression  */
-#line 184 "grammar/parser.y"
+#line 192 "grammar/parser.y"
                                                   { (yyval.node) = mpNode("range", 3, (yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[0].node));}
 #line 1849 "grammar/parser.cpp"
     break;
 
   case 51: /* reverse: %empty  */
-#line 189 "grammar/parser.y"
+#line 197 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1855 "grammar/parser.cpp"
     break;
 
   case 52: /* reverse: REVERSE  */
-#line 190 "grammar/parser.y"
+#line 198 "grammar/parser.y"
               { (yyval.node) = mNode("reverse");}
 #line 1861 "grammar/parser.cpp"
     break;
 
   case 53: /* if_statement: IF expression THEN body else_body END  */
-#line 194 "grammar/parser.y"
+#line 202 "grammar/parser.y"
                                             { (yyval.node) = mpNode("if_statement", 3, (yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[-1].node));}
 #line 1867 "grammar/parser.cpp"
     break;
 
   case 54: /* else_body: %empty  */
-#line 198 "grammar/parser.y"
+#line 206 "grammar/parser.y"
       {(yyval.node) = nullptr;}
 #line 1873 "grammar/parser.cpp"
     break;
 
   case 55: /* else_body: ELSE body  */
-#line 199 "grammar/parser.y"
+#line 207 "grammar/parser.y"
                 { (yyval.node) = mpNode("body", 1, (yyvsp[0].node));}
 #line 1879 "grammar/parser.cpp"
     break;
 
   case 56: /* expression: expression logic_operation relation  */
-#line 203 "grammar/parser.y"
+#line 211 "grammar/parser.y"
                                           { (yyval.node) = mpNode("expression", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1885 "grammar/parser.cpp"
     break;
 
   case 57: /* expression: relation  */
-#line 204 "grammar/parser.y"
+#line 212 "grammar/parser.y"
                { (yyval.node) = mpNode("expression", 1, (yyvsp[0].node));}
 #line 1891 "grammar/parser.cpp"
     break;
 
   case 58: /* logic_operation: AND  */
-#line 208 "grammar/parser.y"
+#line 216 "grammar/parser.y"
           { (yyval.node) = mNode("logic_operation", "and");}
 #line 1897 "grammar/parser.cpp"
     break;
 
   case 59: /* logic_operation: OR  */
-#line 209 "grammar/parser.y"
+#line 217 "grammar/parser.y"
          { (yyval.node) = mNode("logic_operation", "or");}
 #line 1903 "grammar/parser.cpp"
     break;
 
   case 60: /* logic_operation: XOR  */
-#line 210 "grammar/parser.y"
+#line 218 "grammar/parser.y"
           { (yyval.node) = mNode("logic_opeartion", "xor");}
 #line 1909 "grammar/parser.cpp"
     break;
 
   case 61: /* relation: relation compare_sign simple  */
-#line 214 "grammar/parser.y"
+#line 222 "grammar/parser.y"
                                    { (yyval.node) = mpNode("relation", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1915 "grammar/parser.cpp"
     break;
 
   case 62: /* relation: simple  */
-#line 215 "grammar/parser.y"
+#line 223 "grammar/parser.y"
              { (yyval.node) = mpNode("relation", 1, (yyvsp[0].node));}
 #line 1921 "grammar/parser.cpp"
     break;
 
   case 63: /* compare_sign: LT_SIGN  */
-#line 219 "grammar/parser.y"
+#line 227 "grammar/parser.y"
               { (yyval.node) = mNode("compare_sign", "<");}
 #line 1927 "grammar/parser.cpp"
     break;
 
   case 64: /* compare_sign: LET_SIGN  */
-#line 220 "grammar/parser.y"
+#line 228 "grammar/parser.y"
                { (yyval.node) = mNode("compare_sign", "<=");}
 #line 1933 "grammar/parser.cpp"
     break;
 
   case 65: /* compare_sign: GT_SIGN  */
-#line 221 "grammar/parser.y"
+#line 229 "grammar/parser.y"
               { (yyval.node) = mNode("compare_sign", ">");}
 #line 1939 "grammar/parser.cpp"
     break;
 
   case 66: /* compare_sign: GET_SIGN  */
-#line 222 "grammar/parser.y"
+#line 230 "grammar/parser.y"
                { (yyval.node) = mNode("compare_sign", ">=");}
 #line 1945 "grammar/parser.cpp"
     break;
 
   case 67: /* compare_sign: EQ_SIGN  */
-#line 223 "grammar/parser.y"
+#line 231 "grammar/parser.y"
               { (yyval.node) = mNode("compare_sign", "=");}
 #line 1951 "grammar/parser.cpp"
     break;
 
   case 68: /* compare_sign: NEQ_SIGN  */
-#line 224 "grammar/parser.y"
+#line 232 "grammar/parser.y"
                { (yyval.node) = mNode("compare_sign", "/=");}
 #line 1957 "grammar/parser.cpp"
     break;
 
   case 69: /* simple: simple mult_sign_f factor  */
-#line 228 "grammar/parser.y"
+#line 236 "grammar/parser.y"
                                 { (yyval.node) = mpNode("simple", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1963 "grammar/parser.cpp"
     break;
 
   case 70: /* simple: factor  */
-#line 229 "grammar/parser.y"
+#line 237 "grammar/parser.y"
              { (yyval.node) = mpNode("simple", 1, (yyvsp[0].node));}
 #line 1969 "grammar/parser.cpp"
     break;
 
   case 71: /* mult_sign_f: MULT_SIGN  */
-#line 233 "grammar/parser.y"
+#line 241 "grammar/parser.y"
                 { (yyval.node) = mNode("mult_sign", "*");}
 #line 1975 "grammar/parser.cpp"
     break;
 
   case 72: /* mult_sign_f: DIV_SIGN  */
-#line 234 "grammar/parser.y"
+#line 242 "grammar/parser.y"
                { (yyval.node) = mNode("mult_sign", "/");}
 #line 1981 "grammar/parser.cpp"
     break;
 
   case 73: /* mult_sign_f: MOD_SIGN  */
-#line 235 "grammar/parser.y"
+#line 243 "grammar/parser.y"
                { (yyval.node) = mNode("mod_sign", "%");}
 #line 1987 "grammar/parser.cpp"
     break;
 
   case 74: /* factor: factor sum_sign summand  */
-#line 239 "grammar/parser.y"
+#line 247 "grammar/parser.y"
                               { (yyval.node) = mpNode("factor", 3, (yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1993 "grammar/parser.cpp"
     break;
 
   case 75: /* factor: summand  */
-#line 240 "grammar/parser.y"
+#line 248 "grammar/parser.y"
               { (yyval.node) = mpNode("factor", 1, (yyvsp[0].node));}
 #line 1999 "grammar/parser.cpp"
     break;
 
   case 76: /* factor: sum_sign summand  */
-#line 241 "grammar/parser.y"
+#line 249 "grammar/parser.y"
                        { (yyval.node) = mpNode("unary_factor", 2, (yyvsp[-1].node), (yyvsp[0].node));}
 #line 2005 "grammar/parser.cpp"
     break;
 
   case 77: /* factor: NOT summand  */
-#line 242 "grammar/parser.y"
-                  { (yyval.node) = mpNode("not_factor", 2, (yyvsp[-1].value), (yyvsp[0].node));}
+#line 250 "grammar/parser.y"
+                            { (yyval.node) = mpNode("not_factor", 2, (yyvsp[-1].value), (yyvsp[0].node));}
 #line 2011 "grammar/parser.cpp"
     break;
 
   case 78: /* sum_sign: PLUS_SIGN  */
-#line 246 "grammar/parser.y"
+#line 254 "grammar/parser.y"
                 { (yyval.node) = mNode("sum_sign", "+");}
 #line 2017 "grammar/parser.cpp"
     break;
 
   case 79: /* sum_sign: MINUS_SIGN  */
-#line 247 "grammar/parser.y"
+#line 255 "grammar/parser.y"
                  { (yyval.node) = mNode("sum_sign", "-");}
 #line 2023 "grammar/parser.cpp"
     break;
 
   case 80: /* summand: primary  */
-#line 251 "grammar/parser.y"
+#line 259 "grammar/parser.y"
               { (yyval.node) = mpNode("summand", 1, (yyvsp[0].node));}
 #line 2029 "grammar/parser.cpp"
     break;
 
   case 81: /* summand: L_BR expression R_BR  */
-#line 252 "grammar/parser.y"
+#line 260 "grammar/parser.y"
                            { (yyval.node) = mpNode("summand", 1, (yyvsp[-1].node));}
 #line 2035 "grammar/parser.cpp"
     break;
 
   case 82: /* primary: TRUE  */
-#line 257 "grammar/parser.y"
+#line 265 "grammar/parser.y"
            { (yyval.node) = mNode("boolean", "true");}
 #line 2041 "grammar/parser.cpp"
     break;
 
   case 83: /* primary: FALSE  */
-#line 258 "grammar/parser.y"
+#line 266 "grammar/parser.y"
             { (yyval.node) = mNode("boolean", "false");}
 #line 2047 "grammar/parser.cpp"
     break;
 
   case 84: /* primary: REAL_LITERAL  */
-#line 259 "grammar/parser.y"
+#line 267 "grammar/parser.y"
                    { (yyval.node) = mNode("real", (yyvsp[0].value));}
 #line 2053 "grammar/parser.cpp"
     break;
 
   case 85: /* primary: INTEGER_LITERAL  */
-#line 260 "grammar/parser.y"
+#line 268 "grammar/parser.y"
                       { (yyval.node) = mNode("integer", (yyvsp[0].value));}
 #line 2059 "grammar/parser.cpp"
     break;
 
   case 86: /* primary: modifiable_primary  */
-#line 261 "grammar/parser.y"
+#line 269 "grammar/parser.y"
                          { (yyval.node) = (yyvsp[0].node);}
 #line 2065 "grammar/parser.cpp"
     break;
 
   case 87: /* primary: routine_call  */
-#line 262 "grammar/parser.y"
+#line 270 "grammar/parser.y"
                    { (yyval.node) = (yyvsp[0].node);}
 #line 2071 "grammar/parser.cpp"
     break;
 
   case 88: /* modifiable_primary: identifier  */
-#line 266 "grammar/parser.y"
+#line 274 "grammar/parser.y"
                  { (yyval.node) = mpNode("modifiable_primary", 1, (yyvsp[0].node));}
 #line 2077 "grammar/parser.cpp"
     break;
 
   case 89: /* modifiable_primary: modifiable_primary L_SQ_BR expression R_SQ_BR  */
-#line 267 "grammar/parser.y"
+#line 275 "grammar/parser.y"
                                                     { (yyval.node) = mpNode("modifiable_primary_array", 2, (yyvsp[-3].node), (yyvsp[-1].node));}
 #line 2083 "grammar/parser.cpp"
     break;
 
   case 90: /* modifiable_primary: modifiable_primary DOT modifiable_primary  */
-#line 268 "grammar/parser.y"
+#line 276 "grammar/parser.y"
                                                 { (yyval.node) = mpNode("modifiable_primary_field", 2, (yyvsp[-2].node), (yyvsp[0].node));}
 #line 2089 "grammar/parser.cpp"
     break;
 
   case 91: /* identifier: IDENTIFIER  */
-#line 273 "grammar/parser.y"
+#line 281 "grammar/parser.y"
                  { (yyval.node) = mNode("identifier", (yyvsp[0].value)); }
 #line 2095 "grammar/parser.cpp"
     break;
@@ -2319,5 +2319,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 276 "grammar/parser.y"
+#line 284 "grammar/parser.y"
 

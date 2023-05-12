@@ -549,7 +549,7 @@ public:
 
         typecheckNode(node->children[0], new TypeBoolean());
 
-        generateResult += "\tifeq" + elsebody + "\n";
+        generateResult += "\tifeq " + elsebody + "\n";
         typecheckNode(node->children[1], nullptr);
         generateResult += "\tgoto " + ifexit + "\n";
         generateResult += elsebody + ":\n";

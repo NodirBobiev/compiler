@@ -46,9 +46,9 @@ int main(int argc, char *argv[]) {
 
     auto generator = new Generator("out/Test");
 
-    // auto generatedOutput = generator->generate(root);
+    auto generatedOutput = generator->generate(root);
 
-    // std::cout << std::endl << generatedOutput;
+    std::cout << std::endl << generatedOutput;
 
     return 0;   
 }
