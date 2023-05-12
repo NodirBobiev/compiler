@@ -244,21 +244,24 @@ public:
 
     void visitRoutineDeclaration(Node *node)
     {
-        auto oldContext = contextCopy();
-        auto oldIndexCounter = indexCounter;
-        parametersType.clear();
-        indexCounter = 0;
+        parametersType = {}; // clearing
         auto ident = node->children[0]->value;
         currentRoutine = ident;
         if( node->children[1]->type == "parameters" )
             visit(node->children[1]);
-        
+
         Type *type = nullptr;
         if( node->children[1]->type == "type" )
             type = mapType(node->children[1]);
         else if( node->size >= 3 && node->children[2]->type == "type" )
             type = mapType(node->children[2]);
 
+        addVariable(ident, new TypeRoutine(type, parametersType));
+
+        auto oldContext = contextCopy();
+        auto oldIndexCounter = indexCounter;
+        indexCounter = 0;
+        
         if( node->children.back()->type != "body" )
             throw std::runtime_error("RoutineDeclaration: the last child must be body");    
         typecheckNode(node->children.back(), type);
@@ -271,8 +274,6 @@ public:
         std::string header = "";
 
         if( ident == "main"){
-
-
             if( !parametersType.empty() ){
                 throw std::runtime_error("RoutineDeclaration: main routine must not have parameters");
             }else if( type != nullptr){
@@ -559,4 +560,24 @@ public:
         generateResult += ifexit + ":\n"; 
     }
 
+    void visitWhileLoop(Node *node)
+    {
+        auto labels = getLabels("WHILE");
+        auto start = labels.first;
+        auto end = labels.second;
+
+        generateResult += start + ":\n";
+        typecheckNode(node->children[0], new TypeBoolean());
+        generateResult += "\tifeq " + end + "\n";
+        typecheckNode(node->children[1], nullptr);
+        generateResult += "\tgoto " + start + "\n";
+        generateResult += end + ":\n";
+    }
+
+    // void visitRoutineCall(Node *node)
+    // {
+    //     auto ident = node->children[0]->value;
+    //     auto type = getVariableType(ident);
+    //     if(auto routineType = dynamic_cast<TypeRoutine *>)
+    // }
 };
