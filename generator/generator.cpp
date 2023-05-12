@@ -244,8 +244,14 @@ public:
 
     void visitRoutineDeclaration(Node *node)
     {
+        auto oldContext = contextCopy();
+        auto oldIndexCounter = indexCounter;
+        indexCounter = 0;
+        auto oldResult = generateResult;
+        generateResult = "";
         parametersType = {}; // clearing
         auto ident = node->children[0]->value;
+        std::cout << "visitRoutineDeclaration: " + ident << std::endl;
         currentRoutine = ident;
         if( node->children[1]->type == "parameters" )
             visit(node->children[1]);
@@ -258,9 +264,6 @@ public:
 
         addVariable(ident, new TypeRoutine(type, parametersType));
 
-        auto oldContext = contextCopy();
-        auto oldIndexCounter = indexCounter;
-        indexCounter = 0;
         
         if( node->children.back()->type != "body" )
             throw std::runtime_error("RoutineDeclaration: the last child must be body");    
@@ -294,11 +297,12 @@ public:
         header += "\t.limit locals " + std::to_string(indexCounter) + "\n";
 
 
-        generateResult = header + generateResult + ".end method\n";
+        generateResult = oldResult +  header + generateResult + ".end method\n";
         
         context = oldContext;
         indexCounter = oldIndexCounter;
         currentRoutine = "";
+        addVariable(ident, new TypeRoutine(type, parametersType));
     }
 
     void visitForLoop(Node * node)
@@ -343,6 +347,7 @@ public:
     {
         auto ident = node->children[0]->value;
         auto type = mapType(node->children[1]);
+        parametersType.push_back(type);
         addVariable(ident, type);
     }
 
@@ -511,23 +516,30 @@ public:
             generateResult += "\treturn\n";
         }
         else{
+            auto crtype = getVariableType(currentRoutine);
+            Type* returnType = nullptr;
+            if(auto t = dynamic_cast<TypeRoutine *>(crtype)){
+                returnType = t->type;
+            }else{
+                throw std::runtime_error("visitReturn: " + currentRoutine + " routine was not found in context");
+            }
             if( currentRoutine == "main" ){
                 generateResult += "\tgetstatic java/lang/System.out Ljava/io/PrintStream;\n";
                 typecheckNode(node->children[0], nullptr);
                 generateResult += "\tinvokevirtual java/io/PrintStream.println(I)V\n";
                 generateResult += "\treturn\n";
             }else{
-                auto type = typecheckNode(node->children[0], nullptr);
-                if( type == nullptr ){
+                typecheckNode(node->children[0], returnType);
+                if( returnType == nullptr ){
 
-                }else if( auto t = dynamic_cast<TypeBoolean *>(type) ){
+                }else if( auto t = dynamic_cast<TypeBoolean *>(returnType) ){
                     generateResult += "\tireturn\n";
-                }else if( auto t = dynamic_cast<TypeInteger *>(type) ){
+                }else if( auto t = dynamic_cast<TypeInteger *>(returnType) ){
                     generateResult += "\tireturn\n";
-                }else if( auto t = dynamic_cast<TypeReal *>(type) ){
+                }else if( auto t = dynamic_cast<TypeReal *>(returnType) ){
                     generateResult += "\tfreturn\n";
                 }else{
-                    throw std::runtime_error("visitReturn: " + toString(type) + " is not implemented");
+                    throw std::runtime_error("visitReturn: " + toString(returnType) + " is not implemented");
                 }
             }
         }
@@ -574,10 +586,41 @@ public:
         generateResult += end + ":\n";
     }
 
-    // void visitRoutineCall(Node *node)
-    // {
-    //     auto ident = node->children[0]->value;
-    //     auto type = getVariableType(ident);
-    //     if(auto routineType = dynamic_cast<TypeRoutine *>)
-    // }
+    void visitRoutineCall(Node *node)
+    {
+        auto ident = node->children[0]->value;
+        auto type = getVariableType(ident);
+        if(auto routineType = dynamic_cast<TypeRoutine *>(type)){
+            std::vector<Node*>arguments = {};
+            std::vector<Type*>params = routineType->paramTypes;
+            if(node->size == 2){
+                arguments = node->children[1]->children;
+            }
+            
+            if(params.size() != arguments.size()){
+                throw std::runtime_error("visitRoutineCall: " + ident + " wrong number of arguments: " 
+                        + std::to_string(params.size()) + " vs " + std::to_string(arguments.size()));
+            }
+
+            for(int i = 0; i < params.size(); i ++){
+                typecheckNode(arguments[i], params[i]);
+            }
+
+            std::string temp = "";
+            for(auto t: params)
+                temp += toJasminType(t);
+
+            std::string code = "\tinvokestatic " + className + "/" + ident + "(" + temp +")";
+            if( routineType->type != nullptr )
+                code += toJasminType(routineType->type);
+            else
+                code += "V";
+            code += "\n";
+
+            generateResult += code;
+
+        }else{
+            throw std::runtime_error("visitRoutineCall: " + ident + " must be type of routine");
+        }
+    }
 };

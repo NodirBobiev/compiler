@@ -1,0 +1,13 @@
+routine rec(cnt : integer, sum : integer ) : integer is
+    if cnt > 10 then
+        return sum
+    else
+        return rec(cnt + 1, sum + 11)
+    end
+    return sum
+end
+
+
+routine main() is 
+    return rec(2, 0)
+end

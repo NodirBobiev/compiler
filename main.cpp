@@ -8,26 +8,30 @@
 #include <sstream>
 
 int main(int argc, char *argv[]) {
-    // if (argc != 3) {
-    //     std::cerr << "Invalid number of args" << std::endl;
-    //     std::cerr << "Usage: " << argv[0] << " <path_to_source>" << " build/<destination_file-name>" << std::endl;
-    //     return 1;
-    // } 
-    if (argc != 2 ){
-        std::cerr << "Expected 2 args but got " + std::to_string(argc) + " were given" << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <path_to_source> " << std::endl;
-        return 1; 
-    }
-    std::string sourceName = argv[1];
-    // std::string destName = argv[2];
-    std::cout << "Source file path: " << sourceName << std::endl;
-    // std::cout << "Destination file path: " << destName << std::endl;
-    std::ifstream src_file(sourceName);
+    if (argc != 4) {
+        std::cerr << "Expected 4 arguments but got " + std::to_string(argc) + " were given" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <source_file_name> " << " <dest_file_name> " <<  " <classname> " << std::endl;
+        return 1;
+    } 
+    // if (argc != 2 ){
+    //     std::cerr << "Expected 2 args but got " + std::to_string(argc) + " were given" << std::endl;
+    //     std::cerr << "Usage: " << argv[0] << " <path_to_source> " << std::endl;
+    //     return 1; 
+    // }
+    std::string sourceFile = "tests/" + std::string(argv[1]);
+    std::string destFile = "generateds/" + std::string(argv[2]);
+    std::string className = "outs/" + std::string(argv[3]);
+
+    std::cout << "Source file path: " << sourceFile << std::endl;
+    std::cout << "Destination file path: " << destFile << std::endl;
+    std::cout << "ClassName: " << className << std::endl;
+
+    std::ifstream src_file(sourceFile);
     if (!src_file.is_open()) {
         std::cerr << "File don't open" << std::endl;
         return 1;
     }
-    FILE* file_ptr = std::fopen(sourceName.c_str(), "r");
+    FILE* file_ptr = std::fopen(sourceFile.c_str(), "r");
     yyin = file_ptr; 
 
     Node* root = nullptr;
@@ -40,15 +44,20 @@ int main(int argc, char *argv[]) {
 
     std::cout << root->print();
 
-    auto semantic_analyzer = new Analyzer();
+    // auto semantic_analyzer = new Analyzer();
 
-    semantic_analyzer->analyze(root);
+    // semantic_analyzer->analyze(root);
 
-    auto generator = new Generator("out/Test");
+    auto generator = new Generator(className);
 
     auto generatedOutput = generator->generate(root);
 
-    std::cout << std::endl << generatedOutput;
+    
+    std::ofstream outFile(destFile);
+
+    outFile << generatedOutput << std::endl;
+
+    outFile.close();
 
     return 0;   
 }
