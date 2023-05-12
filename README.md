@@ -2,14 +2,14 @@
 Give a look at Description.pdf
 
 ## Description
-Task was write a compiler for an imperative language and convert to java bytecode.
+Task was to write a compiler for an imperative language and JVM.
 
 The implementation is composed of the following parts:
 
 - Lexical Analyzer: implemented using Flex
 - Syntax Analyzer: implemented using Bison
 - Semantic Analyzer: implemented using the Visitor pattern
-- Code Generation: implemented using the Visitor pattern
+- Code Generation: implemented using the Visitor pattern and jasmin was used to generated Java class
 
 
 ## How to run:

@@ -5,15 +5,10 @@ routine fibonacci(n : integer) : integer is
     if n = 1 or n = 2 then
         return 1
     end
-    
-    var a is fibonacci(n -x 2)
-
-    var b is fibonacci(n - 1)
-
-    return a + b
+    return fibonacci(n-2) + fibonacci(n-1)
 end
 
-routine main() is
+routine main(): is
     var b : integer is 5
     return fibonacci(b)
 end
