@@ -7,7 +7,7 @@ void Analyzer::analyze(Node* node)
         visit(node);
     } catch (const std::runtime_error& e) {
         std::cout << "Semantical analyzer found mistake: " << e.what() << std::endl;
-        exit(0); 
+        exit(1); 
     }
 
     std::cout << "\nSemantical analyzis finished without error" << std::endl;
