@@ -1,0 +1,10 @@
+routine min(a : integer, b : integer) : integer is 
+    if a < b then
+        return a
+    end
+    return b
+end
+
+routine gcd(a: integer, b: integer) : integer is
+    if a % b = 0 then
+        return

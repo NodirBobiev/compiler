@@ -1,0 +1,10 @@
+routine sum(a : integer, b : integer) : integer is
+    return a + b
+end
+
+
+routine main() is
+    var myVar is 10
+    var yourVar : integer is 20
+    return sum(myVar, yourVar)
+end
