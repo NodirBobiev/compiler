@@ -1,8 +1,9 @@
-routine main() : boolean is
+routine main() is
     var a is 4
     while a < 5 loop
         a := a + 1
     end
+    return a
 end
 
 

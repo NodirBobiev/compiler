@@ -22,7 +22,10 @@ public:
 
 class TypeRoutine : public Type {
 public:
-    TypeRoutine(){}
+    Type* type;
+    std::vector<Type*>paramTypes;
+    TypeRoutine(Type* type, std::vector<Type*>paramTypes):
+    type(type), paramTypes(paramTypes){}
 };
 
 
@@ -36,6 +39,8 @@ std::string toString(Type* type)
         return "INTEGER";
     if( auto t = dynamic_cast<TypeReal*>(type))
         return "REAL";
+    if( auto t = dynamic_cast<TypeRoutine*>(type))
+        return "ROUTINE";
     throw std::runtime_error("toString: type is not implemented");
 }
 
