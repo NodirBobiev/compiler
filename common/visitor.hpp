@@ -2,6 +2,9 @@
 #define VISITOR_HPP
 
 #include "node.hpp"
+#include <assert.h>
+#include <unordered_map>
+#include <stdexcept>
 
 class Visitor{
 public:

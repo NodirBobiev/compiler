@@ -1,7 +1,4 @@
 #include "visitor.hpp"
-#include <vector>
-#include <stdexcept>
-#include <string>
 
 // /*
 // This function strictly checks a list of nodes against a list of types to ensure

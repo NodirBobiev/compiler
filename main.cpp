@@ -1,6 +1,7 @@
 #include "common/node.hpp"
 #include "grammar/parser.hpp"
 #include "grammar/lexer.hpp"
+#include "semantical_analyzer/analyzer.hpp"
 #include "generator/generator.cpp"
 #include <iostream>
 #include <fstream>
@@ -39,12 +40,9 @@ int main(int argc, char *argv[]) {
 
     std::cout << root->print();
 
-    /*
-    
-    semantic place
-    
-    */
+    auto semantic_analyzer = new Analyzer();
 
+    semantic_analyzer->analyze(root);
 
     auto generator = new Generator();
 
