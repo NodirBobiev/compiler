@@ -48,7 +48,10 @@ int main(int argc, char *argv[]) {
 
     auto generatedOutput = generator->generate(root);
 
-    std::cout << std::endl << generatedOutput;
+    std::ofstream fout("./tests/shit.txt");
+    fout << generatedOutput;
+    fout.close();
 
     return 0;   
 }
+
