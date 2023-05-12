@@ -1,3 +1,12 @@
 routine main() is
-    var x : integer
+    var i : integer
+    var b is 15
+    for i in 1 .. 11 loop
+        if i > 5 then
+            b := b + i
+        else
+            b := b - i
+        end 
+    end
+    return b
 end
