@@ -47,6 +47,7 @@ real       {integer}("."{integer})?("E"("+"|"-")?{integer})?
 "for"            { return FOR; }
 "while"          { return WHILE; }
 "if"             { return IF; }
+"else"           { return ELSE; }
 "true"           { return TRUE; }
 "false"          { return FALSE; }
 "return"         { return RETURN; }

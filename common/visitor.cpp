@@ -1,7 +1,4 @@
 #include "visitor.hpp"
-#include <vector>
-#include <stdexcept>
-#include <string>
 
 // /*
 // This function strictly checks a list of nodes against a list of types to ensure
@@ -125,7 +122,7 @@ void Visitor::visit(Node *node)
     else if( node->type == "reverse" ){
         this->visitRange(node);
     }
-    else if( node->type == "if_statements" ){
+    else if( node->type == "if_statement" ){
         this->visitIfStatement(node);
     }
     else if( node->type == "expression" ){
@@ -151,6 +148,9 @@ void Visitor::visit(Node *node)
     }
     else if( node->type == "unary_factor" ){
         this->visitUnaryFactor(node);
+    }
+    else if( node->type == "not_factor" ){
+        this->visitNotFactor(node);
     }
     else if( node->type == "sum_sign" ){
         this->visitSumSign(node);
@@ -369,6 +369,11 @@ void Visitor::visitUnaryFactor(Node *node)
     invokeChildren(node);
 }
 
+
+void Visitor::visitNotFactor(Node *node)
+{
+    invokeChildren(node);
+}
 
 void Visitor::visitSumSign(Node *node)
 {
