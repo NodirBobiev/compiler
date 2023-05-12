@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     semantic_analyzer->analyze(root);
 
-    // auto generator = new Generator();
+    auto generator = new Generator("out/Test");
 
     // auto generatedOutput = generator->generate(root);
 
