@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
 
     auto generatedOutput = generator->generate(root);
 
+
     
     std::ofstream outFile(destFile);
 
@@ -68,3 +69,4 @@ int main(int argc, char *argv[]) {
 
     return 0;   
 }
+
