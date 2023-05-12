@@ -56,6 +56,14 @@ void yyerror(void ** root, const char* msg, ...) {
 %type<node> mult_sign_f factor sum_sign summand primary modifiable_primary
 %type<node> identifier
 
+%left PLUS_SIGN MINUS_SIGN NOT
+%left MULT_SIGN DIV_SIGN MOD_SIGN
+%left LT_SIGN GT_SIGN LET_SIGN GET_SIGN EQ_SIGN NEQ_SIGN
+%left AND
+%left XOR
+%left OR
+%left L_BR R_BR
+
 %start program
 %%
 program
@@ -239,7 +247,7 @@ factor
     : factor sum_sign summand { $$ = mpNode("factor", 3, $1, $2, $3);}
     | summand { $$ = mpNode("factor", 1, $1);}
     | sum_sign summand { $$ = mpNode("unary_factor", 2, $1, $2);}
-    | NOT summand { $$ = mpNode("not_factor", 2, $1, $2);}
+    | NOT summand %prec NOT { $$ = mpNode("not_factor", 2, $1, $2);}
     ;
 
 sum_sign
