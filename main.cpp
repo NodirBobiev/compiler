@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
     if (argc != 4) {
         std::cerr << "Expected 4 arguments but got " + std::to_string(argc) + " were given" << std::endl;
         std::cerr << "Usage: " << argv[0] << " <source_file_name> " << " <dest_file_name> " <<  " <classname> " << std::endl;
+        // std::cerr << "Usage: " << argv[0] << " <source_file_name> " << " <dest_file_name> " <<  " <classname> " << " <semantic_flag> " << std::endl;
+        
         return 1;
     } 
     // if (argc != 2 ){
@@ -21,6 +23,7 @@ int main(int argc, char *argv[]) {
     std::string sourceFile = "tests/" + std::string(argv[1]);
     std::string destFile = "generateds/" + std::string(argv[2]);
     std::string className = "outs/" + std::string(argv[3]);
+    // std::string semanticFlag = argv[4];
 
     std::cout << "Source file path: " << sourceFile << std::endl;
     std::cout << "Destination file path: " << destFile << std::endl;
@@ -43,11 +46,15 @@ int main(int argc, char *argv[]) {
     }
 
     std::cout << root->print();
+    
+    // if( semanticFlag == "t"){
+    //     auto semantic_analyzer = new Analyzer();
+    //     semantic_analyzer->analyze(root);
+    // }
 
-    // auto semantic_analyzer = new Analyzer();
-
-    // semantic_analyzer->analyze(root);
-
+    auto semantic_analyzer = new Analyzer();
+    semantic_analyzer->analyze(root);
+    
     auto generator = new Generator(className);
 
     auto generatedOutput = generator->generate(root);

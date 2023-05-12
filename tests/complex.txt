@@ -1,0 +1,18 @@
+routine main() is
+    var cnt is 0
+    var year : integer
+
+    for year in 1 .. 1001 loop
+        if (year % 400) = 0 then
+            cnt := cnt + 1
+        else
+            if (year % 4) = 0 then
+                if (year % 100) > 0 then
+                    cnt := cnt + 1
+                end
+            end 
+        end
+    end
+
+    return cnt
+end

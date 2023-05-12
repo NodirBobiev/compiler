@@ -3,7 +3,7 @@
 
 .method public static fibonacci(I)I
 	.limit stack 20
-	.limit locals 2
+	.limit locals 4
 	iload 0
 	i2f
 	ldc 0
@@ -80,6 +80,7 @@ IFE7:
 	fsub
 	f2i
 	invokestatic outs/FibRec/fibonacci(I)I
+	fstore 2
 	iload 0
 	i2f
 	ldc 1
@@ -87,6 +88,9 @@ IFE7:
 	fsub
 	f2i
 	invokestatic outs/FibRec/fibonacci(I)I
+	fstore 3
+	fload 2
+	fload 3
 	fadd
 	f2i
 	ireturn

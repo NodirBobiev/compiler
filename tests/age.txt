@@ -1,0 +1,13 @@
+routine main() is
+    var age is 18
+    var balance is 999
+
+    if age = 18 then
+        if balance > 1000 then
+            return 1000
+        else
+            return 999
+        end
+    end
+    return 0
+end
